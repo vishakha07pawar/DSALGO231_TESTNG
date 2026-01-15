@@ -4,7 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class RegisterPage {
+import base.BaseTest;
+
+public class RegisterPage extends BaseTest{
 	private WebDriver driver;
 	private By userTxt = By.name("username");
 	private By passwordTxt = By.name("password1");

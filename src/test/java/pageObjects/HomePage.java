@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import factory.LoggerFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -102,32 +101,17 @@ public class HomePage {
 
         String dataStructurePageName = dsPage.trim().toLowerCase();
 
-        switch (dataStructurePageName) {
-            case "data structures-introduction":
-                pageObject = new DataStructurePage(driver);
-                break;
-            case "array":
-                pageObject = new ArrayPage(driver);
-                break;
-            case "linked list":
-                pageObject = new LinkedListPage(driver);
-                break;
-            case "stack":
-                pageObject = new StackPage(driver);
-                break;
-            case "queue":
-                pageObject = new QueuePage(driver);
-                break;
-            case "tree":
-                pageObject = new TreePage(driver);
-                break;
-            case "graph":
-                pageObject = new GraphPage(driver);
-                break;
-            default:
-                LoggerFactory.getLogger().error("Given Data Structure page name does not exist");
-                break;
-        }
+		/*
+		 * switch (dataStructurePageName) { case "data structures-introduction":
+		 * pageObject = new DataStructurePage(driver); break; case "array": pageObject =
+		 * new ArrayPage(driver); break; case "linked list": pageObject = new
+		 * LinkedListPage(driver); break; case "stack": pageObject = new
+		 * StackPage(driver); break; case "queue": pageObject = new QueuePage(driver);
+		 * break; case "tree": pageObject = new TreePage(driver); break; case "graph":
+		 * pageObject = new GraphPage(driver); break; default:
+		 * LoggerFactory.getLogger().
+		 * error("Given Data Structure page name does not exist"); break; }
+		 */
 
         return pageObject;
     }
