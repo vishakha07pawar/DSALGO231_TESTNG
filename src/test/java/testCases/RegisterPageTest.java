@@ -12,13 +12,11 @@ import utils.LoggerFactory;
 public class RegisterPageTest extends DriverManager{
 	private WebDriver driver;
 	private RegisterPage registerPage;
-	public RegisterPageTest() {
-		super();
-	}
+	
 	
 	@BeforeMethod
 	public void setUp() {
-		initialization();
+		
 		registerPage = new RegisterPage(driver);
 	}
 
