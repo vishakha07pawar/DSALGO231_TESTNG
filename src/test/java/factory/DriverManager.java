@@ -7,11 +7,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import utils.ConfigReader;
 import utils.LoggerFactory;
 
 public class DriverManager {
 
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+
 
     public static WebDriver initBrowser(String browser) {
 
@@ -38,6 +40,7 @@ public class DriverManager {
 
         getDriver().manage().window().maximize();
         getDriver().manage().deleteAllCookies();
+        getDriver().get(ConfigReader.getAppUrl());
 
         return getDriver();
     }
