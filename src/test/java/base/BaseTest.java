@@ -4,70 +4,42 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 
 import factory.DriverManager;
-import factory.LoggerFactory;
+import utils.LoggerFactory;
 import utils.ConfigReader;
 
+import static utils.LoggerFactory.*;
+
 public class BaseTest {
-	private Properties prop;
-	private ConfigReader configReader;
-	private String browser;
-	private WebDriver driver;
 
-	//@Before("@DsAlgoPortal or @HomePage or @Register or @SignIn or @HomePageSignIn")
-	@BeforeMethod()
-	public void setUp() throws IOException {
-		configReader = new ConfigReader();
-		prop = configReader.loadProperties();
+    private ConfigReader configReader;
+    private String browser;
 
-		if (ConfigReader.getBrowserType() != null) {
-			browser = ConfigReader.getBrowserType();
-		} else {
-			browser = prop.getProperty("browser");
-		}
+    @BeforeClass
+    public void beforeScenario() throws IOException {
+        configReader = new ConfigReader();
+        configReader.loadProperties();
+        browser = ConfigReader.getBrowserType();
+        DriverManager.initBrowser(browser);
+       //System.out.println("Before class  : "+browser);
+        System.out.printf("***Before class driver %s\n",DriverManager.getDriver());
+        getLogger().info("***Before class driver {}",DriverManager.getDriver());
+    }
 
-		driver = DriverManager.initBrowser(browser);
-	}
+    @AfterClass
+    public void tearDown() {
+        System.out.println("at teardown");
+        System.out.printf("@@@@@After class driver %s\n",DriverManager.getDriver());
+        getLogger().info("***Before class driver {}",DriverManager.getDriver());
+        if (DriverManager.getDriver() != null) {
 
-	//@Before("@DataStructure")
-	/*
-	 * @BeforeMethod public void preStep() throws IOException, InterruptedException
-	 * { configReader = new ConfigReader(); prop = configReader.loadProperties();
-	 * 
-	 * if (ConfigReader.getBrowserType() != null) { browser =
-	 * ConfigReader.getBrowserType(); } else { browser =
-	 * prop.getProperty("browser"); }
-	 * 
-	 * driver = DriverManager.initBrowser(browser);
-	 * 
-	 * String appURL = ConfigReader.getAppUrl(); driver.get(appURL);
-	 * 
-	 * DsAlgoPortalPage dsAlgoPortal = new DsAlgoPortalPage(driver); HomePage
-	 * homePage = dsAlgoPortal.clickDsPortalGetStarted(); SignInPage signInPage =
-	 * homePage.clickSignInLink(); String username = "dsalgo231"; String password =
-	 * "automation2025#"; homePage = signInPage.login(username, password); }
-	 */
-
-	/*
-	 * @Before("@TryEditor") public void tryEditorpPreStep() { configReader = new
-	 * ConfigReader(); prop = configReader.loadProperties();
-	 * 
-	 * if (ConfigReader.getBrowserType() != null) { browser =
-	 * ConfigReader.getBrowserType(); } else { browser =
-	 * prop.getProperty("browser"); }
-	 * 
-	 * driver = DriverManager.initBrowser(browser); }
-	 */
-
-	@AfterMethod
-	public void tearDown() {
-		if (DriverManager.getDriver() != null) {
-			DriverManager.getDriver().quit();
-		}
-		LoggerFactory.getLogger().info("DONE tearDown()..");
-	}
-
+            DriverManager.getDriver().quit();
+        }
+        getLogger().info("DONE tearDown()..");
+        System.out.println("after teardown");
+    }
 }
+
+
