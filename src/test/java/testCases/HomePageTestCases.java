@@ -13,53 +13,46 @@ import java.util.List;
 
 public class HomePageTestCases extends BaseTest {
     private HomePage homePage;
-    private SignInPage signInPage;
     private List<String> actualDataStructureDropDownItemNames;
     String username = null;
     String password = null;
-
+    
     @BeforeMethod
-    @Parameters({"browserType"})
-    public void baseHomePage(@Optional String browser) {
-
-        LoggerFactory.getLogger().info("browserType value from testNG file {}", browser);
-        ConfigReader.setBrowserType(browser);
-        appURL = ConfigReader.getAppUrl();
-        driver.get(appURL);
+    public void baseHomePage() { 
+        driver.get(ConfigReader.getAppUrl());
         username = ExcelDataReader.getValidUserName();
         password = ExcelDataReader.getValidPassword();
-        LoggerFactory.getLogger().info("***  HomePageTestCases ***");
         homePage = dsAlgoPortal.clickDsPortalGetStarted();
         actualDataStructureDropDownItemNames = null;
     }
 
     @Test(priority = 1)
-    public void isNumpyNinjaHeadingVisible() {
+    public void verifyNumpyNinjaHeadingVisible() {
         Assert.assertTrue(homePage.isNumpyNinjaHeaderVisible());
         LoggerFactory.getLogger().info("NumpyNinja heading is visible");
     }
 
     @Test(priority = 2)
-    public void isRegisterLinkVisible() {
+    public void verifyRegisterLinkVisible() {
         Assert.assertTrue(homePage.isRegisterLinkVisible());
         LoggerFactory.getLogger().info("Register link is visible");
     }
 
     @Test(priority = 3)
-    public void isSignInLinkVisible() {
+    public void verifySignInLinkVisible() {
         Assert.assertTrue(homePage.isSignInLinkVisible());
         LoggerFactory.getLogger().info("Sign in link is visible");
     }
 
     @Test(priority = 4)
-    public void isDatastructuresDropdownVisible() {
+    public void verifyDatastructuresDropdownVisible() {
         Assert.assertTrue(homePage.isDataStructuresDropDownVisible());
         LoggerFactory.getLogger().info("Data Structures drop down is visible");
     }
 
 
     @Test(priority = 5, dataProvider = "panelNamesDP", dataProviderClass = utils.TestDataProviders.class)
-    public void isGetStartedButtonsForPanelItemsVisible(String ExpectedPanelName) {
+    public void verifyGetStartedButtonsForPanelItemsVisible(String ExpectedPanelName) {
         List<String> actualPanelDataStructuresNames = homePage.getPanelDataStructuresItems();
         Assert.assertTrue(actualPanelDataStructuresNames.contains(ExpectedPanelName));
         LoggerFactory.getLogger().info("user_should_be_able_to_see_get_started_buttons_for_the_following_panel_items {}", ExpectedPanelName);
@@ -67,7 +60,7 @@ public class HomePageTestCases extends BaseTest {
 
 
     @Test(priority = 6, dataProvider = "dropdownNamesDP", dataProviderClass = utils.TestDataProviders.class)
-    public void isDropdownOptionsVisible(String expectedDropDownItemName) {
+    public void verifyDropdownOptionsVisible(String expectedDropDownItemName) {
         if (actualDataStructureDropDownItemNames == null)
             actualDataStructureDropDownItemNames = homePage.getDataStructureDropDownItems();
         Assert.assertTrue(actualDataStructureDropDownItemNames.contains(expectedDropDownItemName));
@@ -76,7 +69,7 @@ public class HomePageTestCases extends BaseTest {
     }
 
    @Test(priority = 7,dataProvider = "dropdownNamesDP", dataProviderClass = utils.TestDataProviders.class)
-    public void isWarningMessageVisibleForDropdownItem(String dropDownItem) {
+    public void verifyWarningMessageVisibleForDropdownItem(String dropDownItem) {
        homePage.selectDataStructureItemFromDropdown(dropDownItem);
        String actualErrorMessage = homePage.getErrorMessage();
         String expectedErrorMessage = "You are not logged in";
@@ -85,7 +78,7 @@ public class HomePageTestCases extends BaseTest {
     }
 
     @Test(priority = 8, dataProvider = "panelNamesDP", dataProviderClass = utils.TestDataProviders.class)
-    public void isWarningMessageVisibleForPanelItems(String panelName) {
+    public void verifyWarningMessageVisibleForPanelItems(String panelName) {
         homePage.clickGetStartedButton(panelName);
         String actualErrorMessage = homePage.getErrorMessage();
         String expectedErrorMessage = "You are not logged in";
@@ -102,7 +95,7 @@ public class HomePageTestCases extends BaseTest {
 
     @Test(priority = 10)
     public void verifyNavigateToSignInPage() {
-        signInPage =  homePage.clickSignInLink();
+    	homePage.clickSignInLink();
         String currentURL = driver.getCurrentUrl();
         Assert.assertTrue(currentURL.contains("login"));
     }
