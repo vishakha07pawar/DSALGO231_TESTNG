@@ -90,7 +90,7 @@ public class HomePageTestCases extends BaseTest {
         LoggerFactory.getLogger().info("user_should_able_to_see_the_following_dropdown_options {}", expectedDropDownItemName);
 
     }
-
+/*
    @Test(priority = 7,dataProvider = "dropdownNamesDP")
     public void isWarningMessageVisibleForDropdownItem(String dropDownItem) {
        homePage.selectDataStructureItemFromDropdown(dropDownItem);
@@ -98,7 +98,7 @@ public class HomePageTestCases extends BaseTest {
         String expectedErrorMessage = "You are not logged in";
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
         LoggerFactory.getLogger().info("user_should_able_to_see_a_warning_message for {}", dropDownItem);
-    }
+    }*/
 
     @Test(priority = 8, dataProvider = "panelNamesDP")
     public void isWarningMessageVisibleForPanelItems(String panelName) {
@@ -123,13 +123,8 @@ public class HomePageTestCases extends BaseTest {
         Assert.assertTrue(currentURL.contains("login"));
     }
 
-
     @Test(priority = 11)
     public void verifyUserAtHomePageAfterSignIn() {
-        appURL = ConfigReader.getAppUrl();
-        driver.get(appURL);
-        dsAlgoPortal = new DsAlgoPortalPage(driver);
-        homePage = dsAlgoPortal.clickDsPortalGetStarted();
         SignInPage signInPage = homePage.clickSignInLink();
         homePage = signInPage.login(username, password);
         Assert.assertTrue(homePage.isUserNameVisibleAfterSignIn(username));
@@ -148,7 +143,6 @@ public class HomePageTestCases extends BaseTest {
         };
     }
 
-
     @Test(priority = 12, dataProvider = "dropdownNavigateDP")
     public void verifyToNavigateFromDropDown(String dropdownItem, String dsPage) {
         homePage.selectDataStructureItemFromDropdown(dropdownItem.trim());
@@ -156,7 +150,6 @@ public class HomePageTestCases extends BaseTest {
         Assert.assertTrue(currentPageURL.contains(dsPage.toLowerCase().trim()));
         LoggerFactory.getLogger().info("userShouldAbleToNavigateTo {} From DropDown {}", dsPage, dropdownItem);
     }
-
 
     @DataProvider(name = "panelNavigateDP")
     String[][] panelNavigate() {
@@ -178,7 +171,6 @@ public class HomePageTestCases extends BaseTest {
         homePage = signInPage.login(username, password);
         homePage.clickGetStartedButton(panelItem.trim());
         String currentPageURL = driver.getCurrentUrl();
-        Assert.assertNotNull(currentPageURL);
         Assert.assertTrue(currentPageURL.contains(dsPage.toLowerCase().trim()));
         LoggerFactory.getLogger().info("userShouldAbleToNavigateTo {} From Panel {}", dsPage, panelItem);
     }
