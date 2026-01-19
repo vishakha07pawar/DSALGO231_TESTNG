@@ -1,44 +1,47 @@
 package base;
 
-import java.io.IOException;
-import java.util.Properties;
-
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
-
 import factory.DriverManager;
-import utils.LoggerFactory;
-import utils.ConfigReader;
+import pageObjects.DsAlgoPortalPage;
+import utils.*;
 
 import static utils.LoggerFactory.*;
 
 public class BaseTest {
 
-    private ConfigReader configReader;
-    private String browser;
+    protected WebDriver driver;
+    protected String appURL = null;
+    protected DsAlgoPortalPage dsAlgoPortal;
 
     @BeforeClass
-    public void beforeScenario() throws IOException {
-        configReader = new ConfigReader();
+    @Parameters({"browserType"})
+    public void before(@Optional String browser) {
+        ConfigReader.setBrowserType(browser);
+        LoggerFactory.getLogger().info("***  before() ***");
+        String className = this.getClass().getName();
+        ConfigReader configReader = new ConfigReader();
         configReader.loadProperties();
-        browser = ConfigReader.getBrowserType();
-        DriverManager.initBrowser(browser);
-       //System.out.println("Before class  : "+browser);
-        System.out.printf("***Before class driver %s\n",DriverManager.getDriver());
-        getLogger().info("***Before class driver {}",DriverManager.getDriver());
+        DriverManager.initBrowser(ConfigReader.getBrowserType());
+        driver = DriverManager.getDriver();
+        appURL = ConfigReader.getAppUrl();
+        driver.get(appURL);
+        dsAlgoPortal = new DsAlgoPortalPage(driver);
+    }
+
+    @BeforeSuite
+    public void InitializeDataReader() {
+        LoggerFactory.getLogger().info("calling DataReader to read text data from excel data source");
+        DataReader reader = new DataReader("/testData/" + "TestData.xlsx");
+        ValidCredentialDataReader.getValidCredentialsFromExcelData();
     }
 
     @AfterClass
     public void tearDown() {
-        System.out.println("at teardown");
-        System.out.printf("@@@@@After class driver %s\n",DriverManager.getDriver());
-        getLogger().info("***Before class driver {}",DriverManager.getDriver());
-        if (DriverManager.getDriver() != null) {
-
-            DriverManager.getDriver().quit();
-        }
+        getLogger().info("at tearDown()");
+        getLogger().info("at tearDown() {}", DriverManager.getDriver());
+        DriverManager.quitDriver();
         getLogger().info("DONE tearDown()..");
-        System.out.println("after teardown");
     }
 }
 

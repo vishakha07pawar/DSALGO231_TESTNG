@@ -3,27 +3,23 @@
 <suite name="DSAlgoTestSuite" parallel="classes" thread-count="5">
    <test name="EdgeTests">
         <parameter name="browserType" value="edge"/>
-      <!-- <groups>
-           <run>
-               <include name="DsAlgoPortal"/>
-           </run>
-       </groups>-->
         <classes>
             <class name="testCases.DsAlgoPortalTestCases"/>
             <class name="testCases.HomePageTestCases"/>
-
         </classes>
     </test>
-    <!--<test name="ChromeTests">
+    <test name="ChromeTests">
         <parameter name="browserType" value="chrome"/>
         <classes>
-            <class name="testRunner.Runner"/>
+            <class name="testCases.DsAlgoPortalTestCases"/>
+            <class name="testCases.HomePageTestCases"/>
         </classes>
     </test>
    <test name="FirefoxTests">
        <parameter name="browserType" value="firefox"/>
-       <classes>
-           <class name="testRunner.Runner"/>
-       </classes>
-   </test>-->
+      <classes>
+           <class name="testCases.DsAlgoPortalTestCases"/>
+            <class name="testCases.HomePageTestCases"/>
+      </classes>
+   </test>
 </suite>

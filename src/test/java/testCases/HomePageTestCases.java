@@ -1,62 +1,59 @@
 package testCases;
 
 import base.BaseTest;
-import factory.DriverManager;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import org.testng.annotations.*;
 import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
-import pageObjects.RegisterPage;
 import pageObjects.SignInPage;
 import utils.ConfigReader;
 import utils.LoggerFactory;
+import utils.ValidCredentialDataReader;
 
 import java.util.List;
 
 public class HomePageTestCases extends BaseTest {
     private HomePage homePage;
-    private DsAlgoPortalPage dsAlgoPortal;
-    private RegisterPage registerPage;
-    private SignInPage signInPage;
-    private WebDriver driver;
+    private List<String> actualDataStructureDropDownItemNames;
+    String username = null;
+    String password = null;
 
-    @Test(priority = 1)
-    public void userClicksGetStartedButtonOnTheDSAlgoPortalPage() {
-        driver = DriverManager.getDriver();
-        dsAlgoPortal = new DsAlgoPortalPage(driver);
+    @BeforeClass
+    public void baseHomePage() {
+        username = ValidCredentialDataReader.getValidUserName();
+        password = ValidCredentialDataReader.getValidPassword();
+        LoggerFactory.getLogger().info("***  HomePageTestCases ***");
         homePage = dsAlgoPortal.clickDsPortalGetStarted();
+        actualDataStructureDropDownItemNames = null;
     }
 
-    @Test(priority = 2, dependsOnMethods = {"userClicksGetStartedButtonOnTheDSAlgoPortalPage"})
-    public void numpy_ninja_heading_should_be_visible() {
+    @Test(priority = 1)
+    public void isNumpyNinjaHeadingVisible() {
         Assert.assertTrue(homePage.isNumpyNinjaHeaderVisible());
         LoggerFactory.getLogger().info("NumpyNinja heading is visible");
     }
 
-    @Test(priority = 3, dependsOnMethods = {"userClicksGetStartedButtonOnTheDSAlgoPortalPage"})
-    public void register_link_should_be_visible() {
+    @Test(priority = 2)
+    public void isRegisterLinkVisible() {
         Assert.assertTrue(homePage.isRegisterLinkVisible());
         LoggerFactory.getLogger().info("Register link is visible");
     }
 
-    @Test(priority = 4, dependsOnMethods = {"userClicksGetStartedButtonOnTheDSAlgoPortalPage"})
-    public void sign_in_link_should_be_visible() {
+    @Test(priority = 3)
+    public void isSignInLinkVisible() {
         Assert.assertTrue(homePage.isSignInLinkVisible());
         LoggerFactory.getLogger().info("Sign in link is visible");
     }
 
-    @Test(priority = 4, dependsOnMethods = {"userClicksGetStartedButtonOnTheDSAlgoPortalPage"})
-    public void datastructures_drop_down_should_be_visible() {
+    @Test(priority = 4)
+    public void isDatastructuresDropdownVisible() {
         Assert.assertTrue(homePage.isDataStructuresDropDownVisible());
         LoggerFactory.getLogger().info("Data Structures drop down is visible");
     }
 
-    @DataProvider(name = "panelNameDP")
+    @DataProvider(name = "panelNamesDP")
     String[][] panelList() {
-        String data[][] = {
+        return new String[][]{
                 {"Data Structures-Introduction"},
                 {"Array"},
                 {"Linked List"},
@@ -64,71 +61,134 @@ public class HomePageTestCases extends BaseTest {
                 {"Queue"},
                 {"Tree"},
                 {"Graph"}};
-        return data;
     }
 
-    @Test(priority = 5, dependsOnMethods = {"userClicksGetStartedButtonOnTheDSAlgoPortalPage"}, dataProvider = "panelNameDP")
-    public void user_should_be_able_to_see_get_started_buttons_for_the_following_panel_items(String ExpectedPanelName) {
-
+    @Test(priority = 5, dataProvider = "panelNamesDP")
+    public void isGetStartedButtonsForPanelItemsVisible(String ExpectedPanelName) {
         List<String> actualPanelDataStructuresNames = homePage.getPanelDataStructuresItems();
-        //Assert.assertEquals(actualPanelDataStructuresNames.size(), countOfGetStartedButtons);
         Assert.assertTrue(actualPanelDataStructuresNames.contains(ExpectedPanelName));
+        LoggerFactory.getLogger().info("user_should_be_able_to_see_get_started_buttons_for_the_following_panel_items {}", ExpectedPanelName);
     }
 
-    @Test(priority=6,dependsOnMethods = {"userClicksGetStartedButtonOnTheDSAlgoPortalPage"})
-    public void user_clicks_the_data_structures_dropdown() {
-        homePage.clickDataStructureDropDown();
-    }
-/*
-    @Then("User should able to see the following {int} dropdown options:")
-    public void user_should_able_to_see_the_following_dropdown_options(Integer dropDownItemsCount, DataTable dataTable) {
-
-        List<String> actualDataStructureDropDownItemNames = homePage.getDataStructureDropDownItems();
-
-        Assert.assertEquals(actualDataStructureDropDownItemNames.size(), dropDownItemsCount);
-
-        List<String> expectedDropDownItemNames = dataTable.asList(String.class);
-
-        Assert.assertEquals(actualDataStructureDropDownItemNames, expectedDropDownItemNames);
+    @DataProvider(name = "dropdownNamesDP")
+    String[][] ddlList() {
+        return new String[][]{
+                {"Arrays"},
+                {"Linked List"},
+                {"Stack"},
+                {"Queue"},
+                {"Tree"},
+                {"Graph"}
+        };
     }
 
-    @When("User selects following {string} from the drop down")
-    public void user_selects_following_from_the_drop_down(String dropDownItem) {
-        homePage.selectDataStructureItemFromDropdown(dropDownItem);
+    @Test(priority = 6, dataProvider = "dropdownNamesDP")
+    public void isDropdownOptionsVisible(String expectedDropDownItemName) {
+        if (actualDataStructureDropDownItemNames == null)
+            actualDataStructureDropDownItemNames = homePage.getDataStructureDropDownItems();
+        Assert.assertTrue(actualDataStructureDropDownItemNames.contains(expectedDropDownItemName));
+        LoggerFactory.getLogger().info("user_should_able_to_see_the_following_dropdown_options {}", expectedDropDownItemName);
+
     }
 
-    @Then("User should able to see a warning message {string}")
-    public void user_should_able_to_see_a_warning_message(String expectedErrorMessage) {
-        String actualErrorMessage = homePage.getErrorMessage();
+  /* @Test(priority = 7,dataProvider = "dropdownNamesDP")
+    public void isWarningMessageVisibleForDropdownItem(String dropDownItem) {
+       homePage.selectDataStructureItemFromDropdown(dropDownItem);
+       String actualErrorMessage = homePage.getErrorMessage();
+        String expectedErrorMessage = "You are not logged in";
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
-    }
+        LoggerFactory.getLogger().info("user_should_able_to_see_a_warning_message for {}", dropDownItem);
+    }*/
 
-    @When("User clicks Get Started button of {string} from panel")
-    public void user_clicks_get_started_button_of_from_panel(String panelName) {
+    @Test(priority = 8, dataProvider = "panelNamesDP")
+    public void isWarningMessageVisibleForPanelItems(String panelName) {
         homePage.clickGetStartedButton(panelName);
+        String actualErrorMessage = homePage.getErrorMessage();
+        String expectedErrorMessage = "You are not logged in";
+        Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
+        LoggerFactory.getLogger().info("user_clicks_get_started_button_of_from_panel for {}", panelName);
     }
 
-    @When("User clicks on the Register link in the home page")
-    public void user_clicks_on_the_register_link_in_the_home_page() {
-        registerPage = homePage.clickRegisterLink();
-    }
-
-    @Then("User should navigate to the Register page")
-    public void user_should_navigate_to_the_register_page() {
-        String currentURL = registerPage.getRegisterPageURL();
+    @Test(priority = 9)
+    public void verifyNavigateToRegisterPage() {
+        homePage.clickRegisterLink();
+        String currentURL = driver.getCurrentUrl();
         Assert.assertTrue(currentURL.contains("register"));
     }
 
-    @When("User clicks on the Sign in link in the home page")
-    public void user_clicks_on_the_sign_in_link_in_the_home_page() {
-        signInPage = homePage.clickSignInLink();
-    }
-
-    @Then("User should navigate to the Sign in page")
-    public void user_should_navigate_to_the_sign_in_page() {
-        String currentURL = signInPage.getSignInPageURL();
+    @Test(priority = 10)
+    public void verifyNavigateToSignInPage() {
+        homePage.clickSignInLink();
+        String currentURL = driver.getCurrentUrl();
         Assert.assertTrue(currentURL.contains("login"));
     }
-*/
+
+
+    @Test(priority = 11)
+    public void verifyUserAtHomePageAfterSignIn() {
+        appURL = ConfigReader.getAppUrl();
+        driver.get(appURL);
+        dsAlgoPortal = new DsAlgoPortalPage(driver);
+        homePage = dsAlgoPortal.clickDsPortalGetStarted();
+        SignInPage signInPage = homePage.clickSignInLink();
+        homePage = signInPage.login(username, password);
+        Assert.assertTrue(homePage.isUserNameVisibleAfterSignIn(username));
+        LoggerFactory.getLogger().info("Signed user \"{}\" is displayed on home page", username);
+    }
+
+    @DataProvider(name = "dropdownNavigateDP")
+    String[][] ddNavigate() {
+        return new String[][]{
+                {"Arrays", "array"},
+                {"Linked List", "linked-list"},
+                {"Stack", "stack"},
+                {"Queue", "queue"},
+                {"Tree", "tree"},
+                {"Graph", "graph"}
+        };
+    }
+
+
+    @Test(priority = 12, dataProvider = "dropdownNavigateDP")
+    public void verifyToNavigateFromDropDown(String dropdownItem, String dsPage) {
+        homePage.selectDataStructureItemFromDropdown(dropdownItem.trim());
+        String currentPageURL = driver.getCurrentUrl();
+        Assert.assertTrue(currentPageURL.contains(dsPage.toLowerCase().trim()));
+        LoggerFactory.getLogger().info("userShouldAbleToNavigateTo {} From DropDown {}", dsPage, dropdownItem);
+    }
+
+
+    @DataProvider(name = "panelNavigateDP")
+    String[][] panelNavigate() {
+        return new String[][]{
+                {"Data Structures-Introduction", "data-structures-introduction"},
+                {"Array", "array"},
+                {"Linked List", "linked-list"},
+                {"Stack", "stack"},
+                {"Queue", "queue"},
+                {"Tree", "tree"},
+                {"Graph", "graph"}
+        };
+    }
+
+    @Test(priority = 13, dataProvider = "panelNavigateDP")
+    public void verifyToNavigateFromPanel(String panelItem, String dsPage) {
+        homePage.clickSignOut();
+        SignInPage signInPage = homePage.clickSignInLink();
+        homePage = signInPage.login(username, password);
+        homePage.clickGetStartedButton(panelItem.trim());
+        String currentPageURL = driver.getCurrentUrl();
+        Assert.assertNotNull(currentPageURL);
+        Assert.assertTrue(currentPageURL.contains(dsPage.toLowerCase().trim()));
+        LoggerFactory.getLogger().info("userShouldAbleToNavigateTo {} From Panel {}", dsPage, panelItem);
+    }
+
+    @Test(priority = 14)
+    public void verifyLogOutMessage() {
+        homePage.clickSignOut();
+        String loggedOutMessage = "Logged out successfully";
+        Assert.assertEquals(homePage.getLoggedOutMsg(), loggedOutMessage);
+        LoggerFactory.getLogger().info("user Logged Out With A Message {}", loggedOutMessage);
+    }
 
 }
