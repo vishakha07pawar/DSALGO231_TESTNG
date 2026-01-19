@@ -7,7 +7,7 @@ public class ConfigReader {
 
     private static String browserType = null;
     private static String applicationURL;
-    Properties prop = null;
+    static Properties prop = null;
 
     public static String getAppUrl() {
         return applicationURL;
@@ -42,4 +42,8 @@ public class ConfigReader {
 
         return prop;
     }
+
+	public static String getLoginUrl() {
+		return prop.getProperty("login.url");
+	}
 }
