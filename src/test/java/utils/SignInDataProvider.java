@@ -15,28 +15,28 @@ public class SignInDataProvider {
     
 	public static Object[][] loadDataFromExcelForDataProvider(String sheetName) {
 	    try {
-	    	DataReader reader = new DataReader("/testData/" + TEST_DATA_FILE_NAME1);
+	    	ExcelDataReader reader = new ExcelDataReader("/testData/" + TEST_DATA_FILE_NAME1);
 	        int rowCount = 0;
 			try {
-				rowCount = DataReader.getRowCount(sheetName);
+				rowCount = ExcelDataReader.getRowCount(sheetName);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	        int colCount = DataReader.getColumnCount(sheetName);
+	        int colCount = ExcelDataReader.getColumnCount(sheetName);
 
 	        Object[][] data = new Object[rowCount][1]; // Each row is a Map
 
 	        for (int i = 1; i <= rowCount; i++) { // Assuming row 0 is the header
 	            Map<String, String> rowData = new HashMap<>();
 	            for (int j = 0; j < colCount; j++) {
-	                String columnName = DataReader.getCellData(sheetName, 0, j); // Column header
-	                String cellValue = DataReader.getCellData(sheetName, i, j); // Cell value
+	                String columnName = ExcelDataReader.getCellData(sheetName, 0, j); // Column header
+	                String cellValue = ExcelDataReader.getCellData(sheetName, i, j); // Cell value
 	                rowData.put(columnName, cellValue);
 	            }
 	            data[i - 1][0] = rowData; // Each row in the Object[][] array contains a Map
 	        }
-	        DataReader.close();
+	        ExcelDataReader.close();
 	        return data;
 	    } catch (IOException e) {
 	        LoggerFactory.getLogger().error("Failed to read data from Excel");
