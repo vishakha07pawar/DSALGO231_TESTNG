@@ -17,29 +17,24 @@ public class BaseTest {
     @BeforeClass
     @Parameters({"browserType"})
     public void before(@Optional String browser) {
+        LoggerFactory.getLogger().info("browser type form testng configuration - {}", browser);
         ConfigReader.setBrowserType(browser);
-        LoggerFactory.getLogger().info("***  before() ***");
-        String className = this.getClass().getName();
         ConfigReader configReader = new ConfigReader();
         configReader.loadProperties();
         DriverManager.initBrowser(ConfigReader.getBrowserType());
         driver = DriverManager.getDriver();
-        appURL = ConfigReader.getAppUrl();
-        driver.get(appURL);
         dsAlgoPortal = new DsAlgoPortalPage(driver);
     }
 
     @BeforeSuite
     public void InitializeDataReader() {
         LoggerFactory.getLogger().info("calling DataReader to read text data from excel data source");
-        DataReader reader = new DataReader("/testData/" + "TestData.xlsx");
-        ValidCredentialDataReader.getValidCredentialsFromExcelData();
+        ExcelDataReader.ReadTestData("/testData/" + "TestData.xlsx");
+        ExcelDataReader.getValidCredentials();
     }
 
     @AfterClass
     public void tearDown() {
-        getLogger().info("at tearDown()");
-        getLogger().info("at tearDown() {}", DriverManager.getDriver());
         DriverManager.quitDriver();
         getLogger().info("DONE tearDown()..");
     }

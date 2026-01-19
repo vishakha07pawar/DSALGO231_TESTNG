@@ -7,21 +7,27 @@ import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
 import pageObjects.SignInPage;
 import utils.ConfigReader;
+import utils.ExcelDataReader;
 import utils.LoggerFactory;
-import utils.ValidCredentialDataReader;
-
 import java.util.List;
 
 public class HomePageTestCases extends BaseTest {
     private HomePage homePage;
+    private SignInPage signInPage;
     private List<String> actualDataStructureDropDownItemNames;
     String username = null;
     String password = null;
 
-    @BeforeClass
-    public void baseHomePage() {
-        username = ValidCredentialDataReader.getValidUserName();
-        password = ValidCredentialDataReader.getValidPassword();
+    @BeforeMethod
+    @Parameters({"browserType"})
+    public void baseHomePage(@Optional String browser) {
+
+        LoggerFactory.getLogger().info("browserType value from testNG file {}", browser);
+        ConfigReader.setBrowserType(browser);
+        appURL = ConfigReader.getAppUrl();
+        driver.get(appURL);
+        username = ExcelDataReader.getValidUserName();
+        password = ExcelDataReader.getValidPassword();
         LoggerFactory.getLogger().info("***  HomePageTestCases ***");
         homePage = dsAlgoPortal.clickDsPortalGetStarted();
         actualDataStructureDropDownItemNames = null;
@@ -51,38 +57,16 @@ public class HomePageTestCases extends BaseTest {
         LoggerFactory.getLogger().info("Data Structures drop down is visible");
     }
 
-    @DataProvider(name = "panelNamesDP")
-    String[][] panelList() {
-        return new String[][]{
-                {"Data Structures-Introduction"},
-                {"Array"},
-                {"Linked List"},
-                {"Stack"},
-                {"Queue"},
-                {"Tree"},
-                {"Graph"}};
-    }
 
-    @Test(priority = 5, dataProvider = "panelNamesDP")
+    @Test(priority = 5, dataProvider = "panelNamesDP", dataProviderClass = utils.TestDataProviders.class)
     public void isGetStartedButtonsForPanelItemsVisible(String ExpectedPanelName) {
         List<String> actualPanelDataStructuresNames = homePage.getPanelDataStructuresItems();
         Assert.assertTrue(actualPanelDataStructuresNames.contains(ExpectedPanelName));
         LoggerFactory.getLogger().info("user_should_be_able_to_see_get_started_buttons_for_the_following_panel_items {}", ExpectedPanelName);
     }
 
-    @DataProvider(name = "dropdownNamesDP")
-    String[][] ddlList() {
-        return new String[][]{
-                {"Arrays"},
-                {"Linked List"},
-                {"Stack"},
-                {"Queue"},
-                {"Tree"},
-                {"Graph"}
-        };
-    }
 
-    @Test(priority = 6, dataProvider = "dropdownNamesDP")
+    @Test(priority = 6, dataProvider = "dropdownNamesDP", dataProviderClass = utils.TestDataProviders.class)
     public void isDropdownOptionsVisible(String expectedDropDownItemName) {
         if (actualDataStructureDropDownItemNames == null)
             actualDataStructureDropDownItemNames = homePage.getDataStructureDropDownItems();
@@ -90,17 +74,17 @@ public class HomePageTestCases extends BaseTest {
         LoggerFactory.getLogger().info("user_should_able_to_see_the_following_dropdown_options {}", expectedDropDownItemName);
 
     }
-/*
-   @Test(priority = 7,dataProvider = "dropdownNamesDP")
+
+   @Test(priority = 7,dataProvider = "dropdownNamesDP", dataProviderClass = utils.TestDataProviders.class)
     public void isWarningMessageVisibleForDropdownItem(String dropDownItem) {
        homePage.selectDataStructureItemFromDropdown(dropDownItem);
        String actualErrorMessage = homePage.getErrorMessage();
         String expectedErrorMessage = "You are not logged in";
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
         LoggerFactory.getLogger().info("user_should_able_to_see_a_warning_message for {}", dropDownItem);
-    }*/
+    }
 
-    @Test(priority = 8, dataProvider = "panelNamesDP")
+    @Test(priority = 8, dataProvider = "panelNamesDP", dataProviderClass = utils.TestDataProviders.class)
     public void isWarningMessageVisibleForPanelItems(String panelName) {
         homePage.clickGetStartedButton(panelName);
         String actualErrorMessage = homePage.getErrorMessage();
@@ -118,32 +102,23 @@ public class HomePageTestCases extends BaseTest {
 
     @Test(priority = 10)
     public void verifyNavigateToSignInPage() {
-        homePage.clickSignInLink();
+        signInPage =  homePage.clickSignInLink();
         String currentURL = driver.getCurrentUrl();
         Assert.assertTrue(currentURL.contains("login"));
     }
 
     @Test(priority = 11)
     public void verifyUserAtHomePageAfterSignIn() {
+        driver.get(ConfigReader.getAppUrl());
+        dsAlgoPortal = new DsAlgoPortalPage(driver);
+        homePage = dsAlgoPortal.clickDsPortalGetStarted();
         SignInPage signInPage = homePage.clickSignInLink();
         homePage = signInPage.login(username, password);
         Assert.assertTrue(homePage.isUserNameVisibleAfterSignIn(username));
         LoggerFactory.getLogger().info("Signed user \"{}\" is displayed on home page", username);
     }
 
-    @DataProvider(name = "dropdownNavigateDP")
-    String[][] ddNavigate() {
-        return new String[][]{
-                {"Arrays", "array"},
-                {"Linked List", "linked-list"},
-                {"Stack", "stack"},
-                {"Queue", "queue"},
-                {"Tree", "tree"},
-                {"Graph", "graph"}
-        };
-    }
-
-    @Test(priority = 12, dataProvider = "dropdownNavigateDP")
+    @Test(priority = 12, dataProvider = "dropdownNavigateDP", dataProviderClass = utils.TestDataProviders.class)
     public void verifyToNavigateFromDropDown(String dropdownItem, String dsPage) {
         homePage.selectDataStructureItemFromDropdown(dropdownItem.trim());
         String currentPageURL = driver.getCurrentUrl();
@@ -151,20 +126,7 @@ public class HomePageTestCases extends BaseTest {
         LoggerFactory.getLogger().info("userShouldAbleToNavigateTo {} From DropDown {}", dsPage, dropdownItem);
     }
 
-    @DataProvider(name = "panelNavigateDP")
-    String[][] panelNavigate() {
-        return new String[][]{
-                {"Data Structures-Introduction", "data-structures-introduction"},
-                {"Array", "array"},
-                {"Linked List", "linked-list"},
-                {"Stack", "stack"},
-                {"Queue", "queue"},
-                {"Tree", "tree"},
-                {"Graph", "graph"}
-        };
-    }
-
-    @Test(priority = 13, dataProvider = "panelNavigateDP")
+    @Test(priority = 13, dataProvider = "panelNavigateDP", dataProviderClass = utils.TestDataProviders.class)
     public void verifyToNavigateFromPanel(String panelItem, String dsPage) {
         homePage.clickSignOut();
         SignInPage signInPage = homePage.clickSignInLink();
@@ -182,5 +144,4 @@ public class HomePageTestCases extends BaseTest {
         Assert.assertEquals(homePage.getLoggedOutMsg(), loggedOutMessage);
         LoggerFactory.getLogger().info("user Logged Out With A Message {}", loggedOutMessage);
     }
-
 }
