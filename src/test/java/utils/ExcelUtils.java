@@ -7,6 +7,7 @@ import java.util.Map;
 
 
 public class ExcelUtils {
+
     private static final DataFormatter formatter = new DataFormatter();
 
     public static Object[][] getDataBySheet(String sheetName) {
@@ -112,4 +113,5 @@ public class ExcelUtils {
         }
         return data;
     }
+    
 }
