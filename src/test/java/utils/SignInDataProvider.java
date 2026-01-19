@@ -1,6 +1,6 @@
+
 package utils;
 
-import static utils.Constants.TEST_DATA_FILE_NAME;
 import static utils.Constants.TEST_DATA_FILE_NAME1;
 
 import java.io.IOException;
@@ -9,14 +9,20 @@ import java.util.Map;
 
 import org.testng.annotations.DataProvider;
 
-public class DSAlgoDataProvider {
+public class SignInDataProvider {
 	private static final String VALID_LOGIN_SHEET = "validLogin";
     private static final String INVALID_LOGIN_SHEET = "invalidLogin";
     
 	public static Object[][] loadDataFromExcelForDataProvider(String sheetName) {
 	    try {
 	    	DataReader reader = new DataReader("/testData/" + TEST_DATA_FILE_NAME1);
-	        int rowCount = DataReader.getRowCount(sheetName);
+	        int rowCount = 0;
+			try {
+				rowCount = DataReader.getRowCount(sheetName);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	        int colCount = DataReader.getColumnCount(sheetName);
 
 	        Object[][] data = new Object[rowCount][1]; // Each row is a Map
@@ -50,3 +56,4 @@ public class DSAlgoDataProvider {
 	    }
 	
 }
+

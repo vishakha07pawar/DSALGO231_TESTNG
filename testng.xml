@@ -13,6 +13,7 @@
         <classes>
             <class name="testCases.DsAlgoPortalTestCases"/>
             <class name="testCases.HomePageTestCases"/>
+            <class name="testCases.SignInPageTestCases"/>
         </classes>
     </test>
    <test name="FirefoxTests">
@@ -20,6 +21,7 @@
       <classes>
            <class name="testCases.DsAlgoPortalTestCases"/>
             <class name="testCases.HomePageTestCases"/>
+            <class name="testCases.SignInPageTestCases"/>
       </classes>
    </test>
 </suite>
