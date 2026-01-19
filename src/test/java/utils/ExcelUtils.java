@@ -15,7 +15,7 @@ public class ExcelUtils {
         Workbook workbook;
 
         try {
-            workbook = ExcelDataReader.getWorkBook();
+            workbook = DataReader.getWorkBook();
             Sheet sheet = workbook.getSheet(sheetName);
 
             Row headerRow = sheet.getRow(0);
@@ -63,7 +63,7 @@ public class ExcelUtils {
     }
 
     public static Map<String, String> getDataByScenario(String sheetName, String scenarioName) {
-        Workbook workbook = ExcelDataReader.getWorkBook();
+        Workbook workbook = DataReader.getWorkBook();
         Sheet sheet = workbook.getSheet(sheetName);
         Row headerRow = sheet.getRow(0);
         int scenarioColumnIndex = -1;

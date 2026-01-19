@@ -6,6 +6,8 @@ import java.util.Map;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
@@ -13,26 +15,28 @@ import factory.DriverManager;
 import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
 import pageObjects.SignInPage;
+import pageObjects.TryEditorPage;
 import utils.ConfigReader;
+import utils.ExcelDataReader;
+import utils.LoggerFactory;
 import utils.SignInDataProvider;
 
 public class SignInPageTestCases extends BaseTest {
 	protected WebDriver driver;
-	private HomePage homePage; 
-	private SignInPage signinpage; 
-	 
+	private HomePage homePage;
+	private SignInPage signinpage;
+
 	@BeforeMethod(alwaysRun = true)
 	public void initPages() throws IOException {
 		driver = DriverManager.getDriver();
-	    homePage = new HomePage(driver);
-	    dsAlgoPortal=new DsAlgoPortalPage(driver);
-	    signinpage = new SignInPage(driver);
-	    driver.get(ConfigReader.getLoginUrl());
+		homePage = new HomePage(driver);
+		dsAlgoPortal = new DsAlgoPortalPage(driver);
+		signinpage = new SignInPage(driver);
+		driver.get(ConfigReader.getLoginUrl());
 	}
-	
-	@Test(dataProvider = "validLoginDataProvider", dataProviderClass = utils.TestDataProviders.class)
+
+	@Test(dataProvider = "validLoginDataProvider", dataProviderClass = SignInDataProvider.class)
 	public void shouldValidateValidLoginData(Map<String, String> testData) throws IOException {
-		homePage.clickSignInLink(); 
 		String username = testData.get("username");
 		String password = testData.get("password");
 		homePage = signinpage.login(username, password);
@@ -40,8 +44,8 @@ public class SignInPageTestCases extends BaseTest {
 		Assert.assertEquals(actualMessage, "You are logged in");
 	}
 
-	@Test(dataProvider = "invalidLoginDataProvider", dataProviderClass = utils.TestDataProviders.class)
-	public void shouldValidateInvalidLoginData(Map<String, String> testData) throws IOException {	
+	@Test(dataProvider = "invalidLoginDataProvider", dataProviderClass = SignInDataProvider.class)
+	public void shouldValidateInvalidLoginData(Map<String, String> testData) throws IOException {
 		String username = testData.get("username");
 		String password = testData.get("password");
 		String expectedMessage = testData.get("expectedmessage");
@@ -49,8 +53,7 @@ public class SignInPageTestCases extends BaseTest {
 		String actMsg = signinpage.verifyLogin(username, password, validation);
 		if (testData.get("username") == null || testData.get("username").trim().isEmpty()) {
 			signinpage.getBrowserValidationMessage();
-		}
-		else if(testData.get("password") == null || testData.get("password").trim().isEmpty()) {
+		} else if (testData.get("password") == null || testData.get("password").trim().isEmpty()) {
 			signinpage.getBrowserValidationMessage();
 		}
 		Assert.assertEquals(actMsg, expectedMessage);
