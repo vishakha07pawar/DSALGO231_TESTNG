@@ -36,11 +36,11 @@ public class RegisterPage extends BaseTest{
 		driver.findElement(confirmPasswrdTxt).sendKeys(passwordConfirmation);
 	}
 
-	public void registerBtn() {
+	public void clickRegisterBtn() {
 		driver.findElement(registerBtn).click();
 	}
 
-	public SignInPage loginLink() {
+	public SignInPage clickLoginLink() {
 		driver.findElement(loginLink).click();
 		return new SignInPage(driver);
 	}
@@ -84,7 +84,7 @@ public class RegisterPage extends BaseTest{
 	}
 
 
-	public String getRegisterPageURL() {
-		return driver.getCurrentUrl();
+	public boolean getRegisterPageURL() {
+		return driver.getCurrentUrl().contains("register");
 	}
 }
