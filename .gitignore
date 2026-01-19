@@ -7,3 +7,5 @@ reports/
 test-output/
 .idea/
 /*.html
+/.metadata
+/bin
