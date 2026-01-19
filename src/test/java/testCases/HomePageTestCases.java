@@ -91,14 +91,14 @@ public class HomePageTestCases extends BaseTest {
 
     }
 
-  /* @Test(priority = 7,dataProvider = "dropdownNamesDP")
+   @Test(priority = 7,dataProvider = "dropdownNamesDP")
     public void isWarningMessageVisibleForDropdownItem(String dropDownItem) {
        homePage.selectDataStructureItemFromDropdown(dropDownItem);
        String actualErrorMessage = homePage.getErrorMessage();
         String expectedErrorMessage = "You are not logged in";
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
         LoggerFactory.getLogger().info("user_should_able_to_see_a_warning_message for {}", dropDownItem);
-    }*/
+    }
 
     @Test(priority = 8, dataProvider = "panelNamesDP")
     public void isWarningMessageVisibleForPanelItems(String panelName) {
