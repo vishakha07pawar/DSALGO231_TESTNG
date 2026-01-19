@@ -7,6 +7,7 @@ import java.util.List;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.LoggerFactory;
 
 public class HomePage {
 
@@ -21,6 +22,8 @@ public class HomePage {
     private By pnlDataStructureItems = By.xpath("//h5[@class='card-title']");
     private By msgUserLoggedIn = By.xpath("//*[contains(text(), 'You are logged in')]");
     private By lblSignedInUser = By.xpath("//div[@class='navbar-nav']//ul//a[2]");
+    private By lnkSignOut = By.xpath("//a[normalize-space()='Sign out']");
+    private By msgSignOut = By.xpath("//div[@class='alert alert-primary' and @role='alert']");
     private WebDriverWait wait;
 
     public HomePage(WebDriver driver) {
@@ -44,6 +47,7 @@ public class HomePage {
     }
 
     public void clickDataStructureDropDown() {
+
         driver.findElement(drpDataStructures).click();
     }
 
@@ -60,6 +64,7 @@ public class HomePage {
     }
 
     public List<String> getDataStructureDropDownItems() {
+        driver.findElement(drpDataStructures).click();
         List<WebElement> dataStructureDropDownItems = driver.findElements(drpDataStructureOptions);
         List<String> itemsList = new ArrayList<>();
 
@@ -69,6 +74,21 @@ public class HomePage {
         }
 
         return itemsList;
+    }
+
+    public int getDataStructureDropDownItemsSize() {
+
+        driver.findElement(drpDataStructures).click();
+
+        List<WebElement> dataStructureDropDownItems = driver.findElements(drpDataStructureOptions);
+        List<String> itemsList = new ArrayList<>();
+
+        for (WebElement dataStructureDropDownItem : dataStructureDropDownItems) {
+            String item = dataStructureDropDownItem.getText();
+            itemsList.add(item);
+        }
+
+        return itemsList.size();
     }
 
     public void selectDataStructureItemFromDropdown(String dsType) {
@@ -91,32 +111,16 @@ public class HomePage {
         element.click();
     }
 
-    public Object clickGetStartedButtonOfGivenDsType(String dsPage) {
-        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        By btnGetStarted = By.xpath("//h5[text()='" + dsPage + "']/following-sibling::a");
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(btnGetStarted));
-        element.click();
+   public void clickGetStartedButtonOfGivenDsType(String dsPage) {
+       wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+       By btnGetStarted = By.xpath("//h5[text()='" + dsPage + "']/following-sibling::a");
+       WebElement element = wait.until(ExpectedConditions.elementToBeClickable(btnGetStarted));
+       element.click();
+   }
 
-        Object pageObject = null;
-
-        String dataStructurePageName = dsPage.trim().toLowerCase();
-
-		/*
-		 * switch (dataStructurePageName) { case "data structures-introduction":
-		 * pageObject = new DataStructurePage(driver); break; case "array": pageObject =
-		 * new ArrayPage(driver); break; case "linked list": pageObject = new
-		 * LinkedListPage(driver); break; case "stack": pageObject = new
-		 * StackPage(driver); break; case "queue": pageObject = new QueuePage(driver);
-		 * break; case "tree": pageObject = new TreePage(driver); break; case "graph":
-		 * pageObject = new GraphPage(driver); break; default:
-		 * LoggerFactory.getLogger().
-		 * error("Given Data Structure page name does not exist"); break; }
-		 */
-
-        return pageObject;
-    }
 
     public String getErrorMessage() {
+
         return driver.findElement(msgError).getText();
     }
 
@@ -151,7 +155,13 @@ public class HomePage {
         return driver.findElement(lblSignedInUser).getText();
     }
 
-    public String getHomePageURL() {
-        return driver.getCurrentUrl();
+      public void clickSignOut() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.elementToBeClickable(lnkSignOut)).click();
+    }
+
+    public String getLoggedOutMsg() {
+
+        return driver.findElement(msgSignOut).getText();
     }
 }
