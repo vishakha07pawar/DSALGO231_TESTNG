@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="DSAlgoTestSuite" parallel="classes" thread-count="5">
+<suite name="DSAlgoTestSuite" parallel="classes" thread-count="1">
    <test name="EdgeTests">
         <parameter name="browserType" value="edge"/>
         <classes>
             <class name="testCases.DsAlgoPortalTestCases"/>
             <class name="testCases.HomePageTestCases"/>
+            <class name="testCases.RegisterPageTestCases"/>
+            <class name="testCases.SignInPageTestCases"/>
+            <class name="testCases.TryEditorTestCases"></class>
         </classes>
     </test>
     <test name="ChromeTests">
@@ -13,7 +16,9 @@
         <classes>
             <class name="testCases.DsAlgoPortalTestCases"/>
             <class name="testCases.HomePageTestCases"/>
+            <class name="testCases.RegisterPageTestCases"/>
             <class name="testCases.SignInPageTestCases"/>
+             <class name="testCases.TryEditorTestCases"></class>
         </classes>
     </test>
    <test name="FirefoxTests">
@@ -21,7 +26,9 @@
       <classes>
            <class name="testCases.DsAlgoPortalTestCases"/>
             <class name="testCases.HomePageTestCases"/>
-            <class name="testCases.SignInPageTestCases"/>
+            <class name="testCases.RegisterPageTestCases"/>
+          <class name="testCases.SignInPageTestCases"/>
+           <class name="testCases.TryEditorTestCases"></class>
       </classes>
    </test>
 </suite>
