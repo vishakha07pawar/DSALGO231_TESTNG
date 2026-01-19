@@ -1,8 +1,6 @@
 
 package utils;
 
-import static utils.Constants.TEST_DATA_FILE_NAME1;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,12 +8,12 @@ import java.util.Map;
 import org.testng.annotations.DataProvider;
 
 public class SignInDataProvider {
-	private static final String VALID_LOGIN_SHEET = "validLogin";
-    private static final String INVALID_LOGIN_SHEET = "invalidLogin";
+	private static final String VALID_LOGIN_SHEET = "login_valid";
+    private static final String INVALID_LOGIN_SHEET = "login_invalid";
     
 	public static Object[][] loadDataFromExcelForDataProvider(String sheetName) {
 	    try {
-	    	ExcelDataReader reader = new ExcelDataReader("/testData/" + TEST_DATA_FILE_NAME1);
+	    	ExcelDataReader reader = new ExcelDataReader("/testData/" + "TestData.xlsx");
 	        int rowCount = 0;
 			try {
 				rowCount = ExcelDataReader.getRowCount(sheetName);

@@ -10,6 +10,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExcelDataReader {
     private static final DataFormatter formatter = new DataFormatter();
@@ -142,4 +144,35 @@ public class ExcelDataReader {
         // Returns the number of cells in the first row
         return firstRow.getPhysicalNumberOfCells();
     }
+    public static Object[][] loadDataFromExcelForDataProvider(String sheetName) {
+	    try {
+	    	ExcelDataReader reader = new ExcelDataReader("/testData/" + "TestData.xlsx");
+	        int rowCount = 0;
+			try {
+				rowCount = ExcelDataReader.getRowCount(sheetName);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        int colCount = ExcelDataReader.getColumnCount(sheetName);
+
+	        Object[][] data = new Object[rowCount][1]; // Each row is a Map
+
+	        for (int i = 1; i <= rowCount; i++) { // Assuming row 0 is the header
+	            Map<String, String> rowData = new HashMap<>();
+	            for (int j = 0; j < colCount; j++) {
+	                String columnName = ExcelDataReader.getCellData(sheetName, 0, j); // Column header
+	                String cellValue = ExcelDataReader.getCellData(sheetName, i, j); // Cell value
+	                rowData.put(columnName, cellValue);
+	            }
+	            data[i - 1][0] = rowData; // Each row in the Object[][] array contains a Map
+	        }
+	        ExcelDataReader.close();
+	        return data;
+	    } catch (IOException e) {
+	        LoggerFactory.getLogger().error("Failed to read data from Excel");
+	        throw new RuntimeException("Failed due to IO error", e);
+	    }
+	}
+    
 }

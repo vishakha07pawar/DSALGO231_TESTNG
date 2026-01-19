@@ -30,8 +30,9 @@ public class SignInPageTestCases extends BaseTest {
 	    driver.get(ConfigReader.getLoginUrl());
 	}
 	
-	@Test(dataProvider = "validLoginDataProvider", dataProviderClass = SignInDataProvider.class)
+	@Test(dataProvider = "validLoginDataProvider", dataProviderClass = utils.TestDataProviders.class)
 	public void shouldValidateValidLoginData(Map<String, String> testData) throws IOException {
+		homePage.clickSignInLink(); 
 		String username = testData.get("username");
 		String password = testData.get("password");
 		homePage = signinpage.login(username, password);
@@ -39,7 +40,7 @@ public class SignInPageTestCases extends BaseTest {
 		Assert.assertEquals(actualMessage, "You are logged in");
 	}
 
-	@Test(dataProvider = "invalidLoginDataProvider", dataProviderClass = SignInDataProvider.class)
+	@Test(dataProvider = "invalidLoginDataProvider", dataProviderClass = utils.TestDataProviders.class)
 	public void shouldValidateInvalidLoginData(Map<String, String> testData) throws IOException {	
 		String username = testData.get("username");
 		String password = testData.get("password");

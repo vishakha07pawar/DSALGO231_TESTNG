@@ -2,6 +2,7 @@ package utils;
 
 import org.testng.annotations.DataProvider;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 public class TestDataProviders {
@@ -60,6 +61,16 @@ public class TestDataProviders {
     @DataProvider(name = "TryEditorData")
     public static Object[][] getData(Method method) {
         return ExcelDataReader.getDataBySheet("TryEditorPage_Data");
+    }
+    @DataProvider(name = "validLoginDataProvider")
+    public static Object[][] validLoginDataProvider() throws IOException {
+        Object[][] data = ExcelDataReader.loadDataFromExcelForDataProvider("login_valid");
+        return data;
+    }
+    @DataProvider(name = "invalidLoginDataProvider")
+    public static Object[][] invalidLoginDataProvider() throws IOException {
+        Object[][] data = ExcelDataReader.loadDataFromExcelForDataProvider("login_invalid");
+        return data;       
     }
 
 }
