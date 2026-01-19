@@ -17,14 +17,12 @@ public class BaseTest {
     @BeforeClass
     @Parameters({"browserType"})
     public void before(@Optional String browser) {
-        LoggerFactory.getLogger().info("browser type form testng configuration - {}",browser);
+        LoggerFactory.getLogger().info("browser type form testng configuration - {}", browser);
         ConfigReader.setBrowserType(browser);
         ConfigReader configReader = new ConfigReader();
         configReader.loadProperties();
         DriverManager.initBrowser(ConfigReader.getBrowserType());
         driver = DriverManager.getDriver();
-        appURL = ConfigReader.getAppUrl();
-        driver.get(appURL);
         dsAlgoPortal = new DsAlgoPortalPage(driver);
     }
 

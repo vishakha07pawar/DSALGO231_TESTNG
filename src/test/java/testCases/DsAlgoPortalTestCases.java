@@ -8,6 +8,16 @@ import utils.LoggerFactory;
 
 public class DsAlgoPortalTestCases extends BaseTest {
 
+    @BeforeMethod
+    @Parameters({"browserType"})
+    public void baseDsPortal(@Optional String browser) {
+        LoggerFactory.getLogger().info("browserType value from testNG file {}", browser);
+        ConfigReader.setBrowserType(browser);
+        appURL = ConfigReader.getAppUrl();
+        driver.get(appURL);
+        LoggerFactory.getLogger().info("***  DSPortalPageTestCases ***");
+    }
+
     @Test(priority = 1)
     public void verifyLandingOnDsAlgoPortal() {
         LoggerFactory.getLogger().info("***  user_should_able_to_land_on_ds_algo_portal ***");

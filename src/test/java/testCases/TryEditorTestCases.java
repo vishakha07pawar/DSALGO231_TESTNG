@@ -10,7 +10,7 @@ public class TryEditorTestCases extends BaseTest {
 
     TryEditorPage tryEditorPage;
 
-    @BeforeClass
+    @BeforeMethod
     @Parameters({"browserType"})
     public void baseTryEditorPage(@Optional String browser) {
         LoggerFactory.getLogger().info("browserType value from testNG file {}", browser);

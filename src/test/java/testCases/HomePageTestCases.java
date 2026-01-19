@@ -9,8 +9,6 @@ import pageObjects.SignInPage;
 import utils.ConfigReader;
 import utils.ExcelDataReader;
 import utils.LoggerFactory;
-import utils.ValidCredentialDataReader;
-
 import java.util.List;
 
 public class HomePageTestCases extends BaseTest {
@@ -20,8 +18,14 @@ public class HomePageTestCases extends BaseTest {
     String username = null;
     String password = null;
 
-    @BeforeClass
-    public void baseHomePage() {
+    @BeforeMethod
+    @Parameters({"browserType"})
+    public void baseHomePage(@Optional String browser) {
+
+        LoggerFactory.getLogger().info("browserType value from testNG file {}", browser);
+        ConfigReader.setBrowserType(browser);
+        appURL = ConfigReader.getAppUrl();
+        driver.get(appURL);
         username = ExcelDataReader.getValidUserName();
         password = ExcelDataReader.getValidPassword();
         LoggerFactory.getLogger().info("***  HomePageTestCases ***");

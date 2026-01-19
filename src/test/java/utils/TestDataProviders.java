@@ -59,7 +59,7 @@ public class TestDataProviders {
     // Data driven tests
     @DataProvider(name = "TryEditorData")
     public static Object[][] getData(Method method) {
-            return ExcelDataReader.getDataBySheet("TryEditorPage_Data");
+        return ExcelDataReader.getDataBySheet("TryEditorPage_Data");
     }
 
 }
