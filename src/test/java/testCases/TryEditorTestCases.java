@@ -8,17 +8,12 @@ import utils.*;
 
 public class TryEditorTestCases extends BaseTest {
 
-    TryEditorPage tryEditorPage;
+    private TryEditorPage tryEditorPage;
 
     @BeforeMethod
-    @Parameters({"browserType"})
-    public void baseTryEditorPage(@Optional String browser) {
-        LoggerFactory.getLogger().info("browserType value from testNG file {}", browser);
-        ConfigReader.setBrowserType(browser);
-        appURL = ConfigReader.getAppUrl();
-        driver.get(appURL + "tryEditor");
+    public void baseTryEditorPage() {
+        driver.get(ConfigReader.getAppUrl() + "tryEditor");
         tryEditorPage = new TryEditorPage(driver);
-        LoggerFactory.getLogger().info("***  TryEditorTestCases ***");
     }
 
     @Test(priority = 1)
@@ -28,9 +23,8 @@ public class TryEditorTestCases extends BaseTest {
     }
 
     @Test(priority = 2, dataProvider = "TryEditorData", dataProviderClass = utils.TestDataProviders.class)
-    public void userWriteTheCodeAndSeeAppropriateResult(String scenarioName,String inputCode,
-                                                        String expectedResult,
-                                                        String expectedMessage) {
+	public void userWriteTheCodeAndSeeAppropriateResult(String scenarioName, String inputCode, String expectedResult,
+			String expectedMessage) {
 
         LoggerFactory.getLogger().info("Executing scenario {}", scenarioName);
 
