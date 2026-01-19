@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.InputStream;
@@ -19,7 +20,7 @@ public class ExcelDataReader {
     public static void ReadTestData(String filePath) {
         try {
             InputStream fileResourceInputStream = ExcelDataReader.class.getResourceAsStream(filePath);
-            workbook = new XSSFWorkbook(fileResourceInputStream);
+            workbook =  WorkbookFactory.create((fileResourceInputStream));
             fileResourceInputStream.close();
         } catch (Exception e) {
             LoggerFactory.getLogger().error("Error while reading data {} file - {}", filePath, e.getMessage());
@@ -56,15 +57,14 @@ public class ExcelDataReader {
         try {
             Sheet sheet = workbook.getSheet(sheetName);
             int noOfRows = sheet.getPhysicalNumberOfRows();
-            int noOfCols = sheet.getRow(0).getPhysicalNumberOfCells();
+            int noOfCols = sheet.getRow(0).getLastCellNum();
 
             data = new Object[noOfRows - 1][noOfCols]; // skip header row
 
             for (int i = 1; i < noOfRows; i++) {
-                Row row = sheet.getRow(i);
-
+            	Row row = sheet.getRow(i);
                 for (int j = 0; j < noOfCols; j++) {
-                    String value = formatter.formatCellValue(sheet.getRow(i).getCell(j)).trim();
+                    String value = formatter.formatCellValue(row.getCell(j));
                     data[i - 1][j] = value;
                 }
             }
