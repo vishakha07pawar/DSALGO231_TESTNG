@@ -11,7 +11,6 @@ import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
 import pageObjects.RegisterPage;
 import utils.ConfigReader;
-import utils.ExcelReader;
 import utils.LoggerFactory;
 
 public class RegisterPageTestCases extends BaseTest {

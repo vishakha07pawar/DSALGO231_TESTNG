@@ -1,22 +1,21 @@
 package testCases;
 
-import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-import factory.DriverManager;
+import base.BaseTest;
 import pageObjects.DataStructurePage;
+import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
+import pageObjects.SignInPage;
+import utils.ConfigReader;
+import utils.DataStructureDataProvider;
+import utils.LoggerFactory;
 
-public class DataStructurePageTestCases {
-	private HomePage homePage;
-	private DataStructurePage dataStructurePage;
-    private WebDriver driver;
+public class DataStructurePageTestCases extends BaseTest{
+	
 
-	public void DataStructurePageTest() {
 
-		driver = DriverManager.getDriver();
-		
-		homePage = new HomePage(driver);
-		
-	}
 }
 
