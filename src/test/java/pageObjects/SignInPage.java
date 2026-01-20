@@ -64,7 +64,7 @@ public class SignInPage {
 		WebElement a = driver.findElement(loginButton);
 		js.executeScript("arguments[0].click();", a);
 		return new HomePage(driver);
-		*/
+		*/	    
 	}
 	
 	public void clickSignIn() {

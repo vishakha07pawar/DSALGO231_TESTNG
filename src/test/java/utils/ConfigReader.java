@@ -46,4 +46,8 @@ public class ConfigReader {
 	public static String getLoginUrl() {
 		return prop.getProperty("login.url");
 	}
+
+	public static String getArrayUrl() {
+		return prop.getProperty("array.url");
+	}
 }
