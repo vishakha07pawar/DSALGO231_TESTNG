@@ -11,7 +11,6 @@ import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
 import pageObjects.SignInPage;
 import utils.ConfigReader;
-import utils.SignInDataProvider;
 
 public class SignInPageTestCases extends BaseTest {
 	private HomePage homePage;
