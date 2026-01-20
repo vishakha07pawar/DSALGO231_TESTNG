@@ -103,5 +103,13 @@ public class TestDataProviders {
 	public static Object[][] invalidLoginDataProvider() {
 		return ExcelDataReader.getDataBySheet("login_invalid");
     }
-
+	@DataProvider(name = "registerWithValidData")
+	public Object[][] getRegisterValidData() {
+      return ExcelDataReader.getDataBySheet("Register_valid");
+    }
+	@DataProvider(name = "VerifyRegisterationWithInvalid")
+	public Object[][] getRegisterInValidData(){
+		return ExcelDataReader.getDataBySheet("Register_invalid");
+		
+	}
 }

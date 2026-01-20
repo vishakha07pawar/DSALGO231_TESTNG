@@ -11,7 +11,6 @@ import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
 import pageObjects.RegisterPage;
 import utils.ConfigReader;
-import utils.ExcelReader;
 import utils.LoggerFactory;
 
 public class RegisterPageTestCases extends BaseTest {
@@ -45,7 +44,7 @@ public class RegisterPageTestCases extends BaseTest {
 
 	}
 
-	@Test(priority = 3, dataProvider = "registerWithValidData", dataProviderClass = ExcelReader.class)
+	@Test(priority = 3, dataProvider = "registerWithValidData",dataProviderClass = utils.TestDataProviders.class)
 	public void VerifyValidRegisteration(String userName, String passWord, String passwordConfirmation) {
 		LoggerFactory.getLogger().info("VerifyValidRegisteration for user {}", userName);
 		String UniqueUsername = userName + System.currentTimeMillis();
@@ -58,7 +57,7 @@ public class RegisterPageTestCases extends BaseTest {
 
 	}
 
-	@Test(priority = 4, dataProvider = "VerifyRegisterationWithInvalid", dataProviderClass = ExcelReader.class)
+	@Test(priority = 4, dataProvider = "VerifyRegisterationWithInvalid", dataProviderClass = utils.TestDataProviders.class)
 	public void InvalidRegisteration(String userName, String passWord, String passwordConfirmation, String fieldName,
 			String expectedErrorMessage) {
 		LoggerFactory.getLogger().info("InvalidRegisteration for user {}", userName);
