@@ -55,7 +55,7 @@ public class HomePageTestCases extends BaseTest {
     public void verifyGetStartedButtonsForPanelItemsVisible(String ExpectedPanelName) {
         List<String> actualPanelDataStructuresNames = homePage.getPanelDataStructuresItems();
         Assert.assertTrue(actualPanelDataStructuresNames.contains(ExpectedPanelName));
-        LoggerFactory.getLogger().info("user_should_be_able_to_see_get_started_buttons_for_the_following_panel_items {}", ExpectedPanelName);
+        LoggerFactory.getLogger().info("Get stared button for the panel visible :", ExpectedPanelName);
     }
 
 
@@ -64,7 +64,7 @@ public class HomePageTestCases extends BaseTest {
         if (actualDataStructureDropDownItemNames == null)
             actualDataStructureDropDownItemNames = homePage.getDataStructureDropDownItems();
         Assert.assertTrue(actualDataStructureDropDownItemNames.contains(expectedDropDownItemName));
-        LoggerFactory.getLogger().info("user_should_able_to_see_the_following_dropdown_options {}", expectedDropDownItemName);
+        LoggerFactory.getLogger().info("Drop down option visible :", expectedDropDownItemName);
 
     }
 
@@ -74,7 +74,7 @@ public class HomePageTestCases extends BaseTest {
        String actualErrorMessage = homePage.getErrorMessage();
         String expectedErrorMessage = "You are not logged in";
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
-        LoggerFactory.getLogger().info("user_should_able_to_see_a_warning_message for {}", dropDownItem);
+        LoggerFactory.getLogger().info("Warning message visible for the dropdown :", dropDownItem);
     }
 
     @Test(priority = 8, dataProvider = "panelNamesDP", dataProviderClass = utils.TestDataProviders.class)
@@ -83,7 +83,7 @@ public class HomePageTestCases extends BaseTest {
         String actualErrorMessage = homePage.getErrorMessage();
         String expectedErrorMessage = "You are not logged in";
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
-        LoggerFactory.getLogger().info("user_clicks_get_started_button_of_from_panel for {}", panelName);
+        LoggerFactory.getLogger().info("Warning message visible for the panel :", panelName);
     }
 
     @Test(priority = 9)
@@ -91,6 +91,7 @@ public class HomePageTestCases extends BaseTest {
         homePage.clickRegisterLink();
         String currentURL = driver.getCurrentUrl();
         Assert.assertTrue(currentURL.contains("register"));
+        LoggerFactory.getLogger().info("Navigated to Register Page");
     }
 
     @Test(priority = 10)
@@ -98,6 +99,7 @@ public class HomePageTestCases extends BaseTest {
     	homePage.clickSignInLink();
         String currentURL = driver.getCurrentUrl();
         Assert.assertTrue(currentURL.contains("login"));
+        LoggerFactory.getLogger().info("Navigated to SignIn Page");
     }
 
     @Test(priority = 11)
@@ -108,7 +110,7 @@ public class HomePageTestCases extends BaseTest {
         SignInPage signInPage = homePage.clickSignInLink();
         homePage = signInPage.login(username, password);
         Assert.assertTrue(homePage.isUserNameVisibleAfterSignIn(username));
-        LoggerFactory.getLogger().info("Signed user \"{}\" is displayed on home page", username);
+        LoggerFactory.getLogger().info("Signed user \"{}\" is displayed on home page:", username);
     }
 
     @Test(priority = 12, dataProvider = "dropdownNavigateDP", dataProviderClass = utils.TestDataProviders.class)
@@ -116,7 +118,7 @@ public class HomePageTestCases extends BaseTest {
         homePage.selectDataStructureItemFromDropdown(dropdownItem.trim());
         String currentPageURL = driver.getCurrentUrl();
         Assert.assertTrue(currentPageURL.contains(dsPage.toLowerCase().trim()));
-        LoggerFactory.getLogger().info("userShouldAbleToNavigateTo {} From DropDown {}", dsPage, dropdownItem);
+        LoggerFactory.getLogger().info("NavigatedTo {} From DropDown {}", dsPage, dropdownItem);
     }
 
     @Test(priority = 13, dataProvider = "panelNavigateDP", dataProviderClass = utils.TestDataProviders.class)
@@ -127,7 +129,7 @@ public class HomePageTestCases extends BaseTest {
         homePage.clickGetStartedButton(panelItem.trim());
         String currentPageURL = driver.getCurrentUrl();
         Assert.assertTrue(currentPageURL.contains(dsPage.toLowerCase().trim()));
-        LoggerFactory.getLogger().info("userShouldAbleToNavigateTo {} From Panel {}", dsPage, panelItem);
+        LoggerFactory.getLogger().info("NavigatedTo {} From Panel {}", dsPage, panelItem);
     }
 
     @Test(priority = 14)
@@ -135,6 +137,6 @@ public class HomePageTestCases extends BaseTest {
         homePage.clickSignOut();
         String loggedOutMessage = "Logged out successfully";
         Assert.assertEquals(homePage.getLoggedOutMsg(), loggedOutMessage);
-        LoggerFactory.getLogger().info("user Logged Out With A Message {}", loggedOutMessage);
+        LoggerFactory.getLogger().info("Logged Out With A Message {}", loggedOutMessage);
     }
 }

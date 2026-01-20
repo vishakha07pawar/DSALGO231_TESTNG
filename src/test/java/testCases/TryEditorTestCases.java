@@ -17,21 +17,16 @@ public class TryEditorTestCases extends BaseTest {
     }
 
     @Test(priority = 1)
-    public void userShouldSeeRunButtonInTheTryEditorPage() {
+    public void verifyRunButtonInTheTryEditorPageVisible() {
         Assert.assertTrue(tryEditorPage.isRunButtonVisible());
-        LoggerFactory.getLogger().info("userShouldSeeRunButtonInTheTryEditorPage");
+        LoggerFactory.getLogger().info("RunButtonInTheTryEditorPageVisible");
     }
 
     @Test(priority = 2, dataProvider = "TryEditorData", dataProviderClass = utils.TestDataProviders.class)
-	public void userWriteTheCodeAndSeeAppropriateResult(String scenarioName, String inputCode, String expectedResult,
-			String expectedMessage) {
-
-        LoggerFactory.getLogger().info("Executing scenario {}", scenarioName);
+	public void VerifyAppropriateResultVisibleForGivenCode(String inputCode, String expectedResult,String expectedMessage) {
 
         tryEditorPage.enterDataIntoEditor(inputCode);
-
         tryEditorPage.Run();
-
         if (expectedResult.equalsIgnoreCase("print")) {
             Assert.assertEquals(tryEditorPage.getPrintMessage(), expectedMessage);
         } else if (expectedResult.equalsIgnoreCase("alert")) {
