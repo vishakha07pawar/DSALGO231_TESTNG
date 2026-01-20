@@ -30,25 +30,25 @@ public class DsAlgoPortalTestCases extends BaseTest {
     @Test(priority = 2)
     public void verifyGetStartedButtonOnDsPortalPageVisible() {
         Assert.assertTrue(dsAlgoPortal.isDsPortalGetStartedVisible());
-        LoggerFactory.getLogger().info("User can see Get Started button on DS Algo Portal page");
+        LoggerFactory.getLogger().info("Get Started button on DS Algo Portal page is visible");
     }
 
     @Test(priority = 3)
     public void verifyPreparingForInterviewsHeadingOnDsPortalVisible() {
         Assert.assertTrue(dsAlgoPortal.isDsPortalHeadingVisible());
-        LoggerFactory.getLogger().info("User can see Preparing for the Interviews heading on DS Algo Portal page");
+        LoggerFactory.getLogger().info("Preparing for the Interviews heading on DS Algo Portal page is visible");
     }
 
     @Test(priority = 4)
     public void verifyRightPlaceParagraphOnDsPortalVisible() {
         Assert.assertTrue(dsAlgoPortal.isDsPortalParagraphVisible());
-        LoggerFactory.getLogger().info("User can see You are at the right place paragraph on DS Algo Portal page");
+        LoggerFactory.getLogger().info("You are at the right place paragraph on DS Algo Portal page is visible");
     }
 
     @Test(priority = 5)
     public void verifyNavigateToHomePage() {
         dsAlgoPortal.clickDsPortalGetStarted();
         Assert.assertEquals(driver.getCurrentUrl(), appURL + "home");
-        LoggerFactory.getLogger().info("User navigates to Home page");
+        LoggerFactory.getLogger().info("Navigated to Home page");
     }
 }

@@ -13,7 +13,7 @@ public class ExcelDataReader {
     private static final DataFormatter formatter = new DataFormatter();
     private static Workbook workbook = null;
     private static String validUserName;
-    private static String validPassword;
+    private static String validPassword; 
 
     private ExcelDataReader() { }
 
