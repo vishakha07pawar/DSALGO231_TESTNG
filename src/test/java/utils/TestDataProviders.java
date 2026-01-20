@@ -55,6 +55,40 @@ public class TestDataProviders {
                 {"Graph", "graph"}
         };
     }
+    @DataProvider(name = "arrayTopics")
+    public Object[][] arrayTopicsData() {
+        return new Object[][] {
+                { "Arrays in Python", "Arrays in Python", "arrays-in-python" },
+                { "Arrays Using List", "Arrays Using List", "arrays-using-list" },
+                { "Basic Operations in Lists", "Basic Operations in Lists", "basic-operations-in-lists" }
+        };
+    }
+    @DataProvider(name = "arrayTopicsurlcheck")
+    public Object[][] arrayTopics() {
+        return new Object[][]{
+                {"arrays-in-python"},
+                {"arrays-using-list"},
+                {"basic-operations-in-lists"}
+        };
+    }
+
+    @DataProvider(name = "practiceQuestions")
+    public Object[][] practiceQuestionsData() {
+        return new Object[][] {
+                { "Search the array" },
+                { "Max Consecutive Ones" },
+                { "Find Numbers with Even Number of Digits" },
+                { "Squares of a Sorted Array" }
+        };
+    }
+    @DataProvider(name = "arrayHeaders")
+    public Object[][] arrayHeaders() {
+        return new Object[][]{
+                {"Arrays in Python"},
+                {"Arrays Using List"},
+                {"Basic Operations in Lists"}
+        };
+    }
 
     // Data driven tests
     @DataProvider(name = "TryEditorData")
