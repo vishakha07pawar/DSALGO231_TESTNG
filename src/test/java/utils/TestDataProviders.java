@@ -61,5 +61,13 @@ public class TestDataProviders {
     public static Object[][] getData(Method method) {
         return ExcelDataReader.getDataBySheet("TryEditorPage_Data");
     }
+    @DataProvider(name = "validLoginDataProvider")
+	public static Object[][] validLoginDataProvider() {
+		return ExcelDataReader.getDataBySheet("login_valid");
+	}
+	@DataProvider(name = "invalidLoginDataProvider")
+	public static Object[][] invalidLoginDataProvider() {
+		return ExcelDataReader.getDataBySheet("login_invalid");
+    }
 
 }
