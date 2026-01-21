@@ -14,23 +14,22 @@ public class BaseTest {
     protected String appURL = null;
     protected DsAlgoPortalPage dsAlgoPortal;
 
+    @BeforeSuite
+    public void InitializeDataReader() {
+        LoggerFactory.getLogger().info("calling DataReader to read text data from excel data source");
+        ExcelDataReader.ReadTestData("/testData/" + "TestData.xlsx");
+        ExcelDataReader.getValidCredentials();
+    }
+
     @BeforeClass
     @Parameters({"browserType"})
     public void before(@Optional String browser) {
-        LoggerFactory.getLogger().info("browser type form testng configuration - {}", browser);
         ConfigReader.setBrowserType(browser);
         ConfigReader configReader = new ConfigReader();
         configReader.loadProperties();
         DriverManager.initBrowser(ConfigReader.getBrowserType());
         driver = DriverManager.getDriver();
         dsAlgoPortal = new DsAlgoPortalPage(driver);
-    }
-
-    @BeforeSuite
-    public void InitializeDataReader() {
-        LoggerFactory.getLogger().info("calling DataReader to read text data from excel data source");
-        ExcelDataReader.ReadTestData("/testData/" + "TestData.xlsx");
-        ExcelDataReader.getValidCredentials();
     }
 
     @AfterClass

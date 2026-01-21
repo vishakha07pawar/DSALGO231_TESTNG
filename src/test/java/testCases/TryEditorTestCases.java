@@ -19,11 +19,11 @@ public class TryEditorTestCases extends BaseTest {
     @Test(priority = 1)
     public void verifyRunButtonInTheTryEditorPageVisible() {
         Assert.assertTrue(tryEditorPage.isRunButtonVisible());
-        LoggerFactory.getLogger().info("RunButtonInTheTryEditorPageVisible");
+        LoggerFactory.getLogger().info("Run button in the Try Editor page visible");
     }
 
     @Test(priority = 2, dataProvider = "TryEditorData", dataProviderClass = utils.TestDataProviders.class)
-	public void VerifyAppropriateResultVisibleForGivenCode(String inputCode, String expectedResult,String expectedMessage) {
+    public void VerifyAppropriateResultVisibleForGivenCode(String inputCode, String expectedResult, String expectedMessage) {
 
         tryEditorPage.enterDataIntoEditor(inputCode);
         tryEditorPage.Run();
