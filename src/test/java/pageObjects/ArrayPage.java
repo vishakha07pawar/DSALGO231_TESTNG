@@ -29,11 +29,6 @@ public class ArrayPage {
 	private By practiceQuestionsTopicLink = By.xpath("//a[normalize-space()='Practice Questions']");
 	private By practiceQuestionsLinks = By.xpath("//a[@class='list-group-item']");
 	private By codeEditor = By.xpath("//div[@class='CodeMirror-scroll']");
-	private By searchArrayLink = By.xpath("//a[normalize-space(text())='Search the array']");
-	private By maxConsecutiveOnes = By.xpath("//a[normalize-space(text())='Max Consecutive Ones']");
-	private By findNumberwithEvenNumbereofDigits = By
-			.xpath("//a[normalize-space(text())='Find Numbers with Even Number of Digits']");
-	private By squaresofaSortedArray = By.xpath("//a[normalize-space(text())='Squares of a Sorted Array']");
 	private By runBtn = By.xpath("//button[normalize-space()='Run']");
 	private By txtOutput = By.xpath("//pre[@id='output']");
 

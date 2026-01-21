@@ -89,6 +89,22 @@ public class TestDataProviders {
                 {"Basic Operations in Lists"}
         };
     }
+    @DataProvider(name = "stackTopics")
+    public Object[][] stackTopicsData() {
+        return new Object[][] {
+                { "Operations in Stack", "Operations in Stack", "operations-in-stack" },
+                { "Implementation", "Implementation", "implementation" },
+                { "Applications", "Applications", "stack-applications" }
+        };
+    }
+    @DataProvider(name = "stackHeaders")
+    public Object[][] stackHeaders() {
+        return new Object[][]{
+                {"Operations in Stack"},
+                {"Implementation"},
+                {"Applications"}
+        };
+    }
 
     // Data driven tests
     @DataProvider(name = "TryEditorData")
