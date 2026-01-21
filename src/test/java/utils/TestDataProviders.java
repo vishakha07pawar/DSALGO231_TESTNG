@@ -109,7 +109,10 @@ public class TestDataProviders {
     }
 	@DataProvider(name = "VerifyRegisterationWithInvalid")
 	public Object[][] getRegisterInValidData(){
-		return ExcelDataReader.getDataBySheet("Register_invalid");
-		
+		return ExcelDataReader.getDataBySheet("Register_invalid");		
+	}
+	@DataProvider(name = "validInvalidPythonCode")
+	public static Object[][] validInvalidPythonCodeRunDataProvider() {
+		return ExcelDataReader.getDataBySheet("TryEditorPage_Data");
 	}
 }

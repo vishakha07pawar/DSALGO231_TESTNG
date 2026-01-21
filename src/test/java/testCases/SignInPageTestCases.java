@@ -30,11 +30,13 @@ public class SignInPageTestCases extends BaseTest {
 		Assert.assertEquals(actualMessage, expectedMessage);
 		homePage.clickSignOut();
 	}
+	
 	@Test(priority = 2, dataProvider = "invalidLoginDataProvider", dataProviderClass = utils.TestDataProviders.class)
 	public void shouldValidateInvalidLoginData(String userName, String password, String expectedMessage, String validation) throws IOException {
 		String actMsg = signinpage.verifyLogin(userName, password, validation);
 		Assert.assertEquals(actMsg, expectedMessage);
 	}
+	
 	@Test(priority = 3)
 	public void userNavigatesToRegistrationPage() {
 		signinpage.clickRegister();
