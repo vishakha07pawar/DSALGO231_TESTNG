@@ -1,14 +1,19 @@
 package pageObjects;
 
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class StackPage {
 
 	private WebDriver driver;
+	private WebDriverWait wait;
 
 	private By headerStack = By.xpath("//h4[normalize-space()='Stack']");
 	private By headerTopicsCoveredStack = By.xpath("//p[@class='bg-secondary text-white']");
@@ -16,9 +21,11 @@ public class StackPage {
 	private By lnkStackLinks = By.xpath("//a[@class='list-group-item']");
 	private By btnTryHereStackLinkPage = By.xpath("//a[normalize-space()='Try here>>>']");
 	private By lnkPracticeQuestionsStackTopics = By.xpath("//a[normalize-space()='Practice Questions']");
+	private By lnkOperationsInStack = By.xpath("//a[normalize-space()='Operations in Stack']");
 
 	public StackPage(WebDriver driver) {
 		this.driver = driver;
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
 	public boolean isStackHeaderVisible() {
@@ -27,10 +34,6 @@ public class StackPage {
 
 	public boolean isTopicsCoveredHeaderForStackVisible() {
 		return driver.findElement(headerTopicsCoveredStack).isDisplayed();
-	}
-
-	public boolean isTryHereVisible() {
-		return driver.findElement(btnTryHereStackLinkPage).isDisplayed();
 	}
 
 	public boolean isStackLinkVisible(String stackTopicLink) {
@@ -43,28 +46,42 @@ public class StackPage {
 		return false;
 	}
 
+	public void clickOperationsInStackLink() {
+		wait.until(ExpectedConditions.elementToBeClickable(lnkOperationsInStack)).click();
+	}
+
 	public void clickStackTopicLink(String stackTopicLink) {
 		By linkPath = By.xpath("//a[text() = '" + stackTopicLink + "']");
 		driver.findElement(linkPath).click();
 	}
 
-	public String getStackPageURL() {
-		return driver.getCurrentUrl();
-	}
-
-	public void clickTryHereInStackLinkPage() {
-		driver.findElement(btnTryHereStackLinkPage).click();
+	public void clickTryHereInStackLinkPage(String topic) {
+		clickStackTopicLink(topic);
+		wait.until(ExpectedConditions.elementToBeClickable(btnTryHereStackLinkPage)).click();
 	}
 
 	public String getStackLinksTopicHeader() {
 		return driver.findElement(headerStackLinkTopic).getText();
 	}
 
-	public boolean isPracticeQuestionsLinkOnStackVisible() {
-		return driver.findElement(lnkPracticeQuestionsStackTopics).isDisplayed();
-	}
-
 	public void clickPracticeQuestionsOnStack() {
 		driver.findElement(lnkPracticeQuestionsStackTopics).click();
+	}
+
+	public void navigateToPage(String stackUrl) {
+		if (stackUrl != null && !stackUrl.isEmpty()) {
+			driver.get(stackUrl);
+		}
+	}
+
+	public List<String> getAllStackTopicLinks() {
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(lnkStackLinks));
+		List<WebElement> links = driver.findElements(lnkStackLinks);
+
+		List<String> linkTexts = new ArrayList<>();
+		for (WebElement link : links) {
+			linkTexts.add(link.getText().trim());
+		}
+		return linkTexts;
 	}
 }
