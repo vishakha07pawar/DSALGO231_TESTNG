@@ -7,7 +7,6 @@ import java.util.List;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.LoggerFactory;
 
 public class HomePage {
 
@@ -21,7 +20,6 @@ public class HomePage {
     private By msgError = By.xpath("//div[@role='alert']");
     private By pnlDataStructureItems = By.xpath("//h5[@class='card-title']");
     private By msgUserLoggedIn = By.xpath("//*[contains(text(), 'You are logged in')]");
-    private By lblSignedInUser = By.xpath("//div[@class='navbar-nav']//ul//a[2]");
     private By lnkSignOut = By.xpath("//a[normalize-space()='Sign out']");
     private By msgSignOut = By.xpath("//div[@class='alert alert-primary' and @role='alert']");
     private WebDriverWait wait;
@@ -46,20 +44,13 @@ public class HomePage {
         return driver.findElement(drpDataStructures).isDisplayed();
     }
 
-    public void clickDataStructureDropDown() {
-
-        driver.findElement(drpDataStructures).click();
-    }
-
     public List<String> getPanelDataStructuresItems() {
         List<WebElement> dataStructureItems = driver.findElements(pnlDataStructureItems);
         List<String> dataStructureItemsNames = new ArrayList<>();
-
         for (WebElement dataStructureItem : dataStructureItems) {
             String item = dataStructureItem.getText();
             dataStructureItemsNames.add(item);
         }
-
         return dataStructureItemsNames;
     }
 
@@ -67,34 +58,16 @@ public class HomePage {
         driver.findElement(drpDataStructures).click();
         List<WebElement> dataStructureDropDownItems = driver.findElements(drpDataStructureOptions);
         List<String> itemsList = new ArrayList<>();
-
         for (WebElement dataStructureDropDownItem : dataStructureDropDownItems) {
             String item = dataStructureDropDownItem.getText();
             itemsList.add(item);
         }
-
         return itemsList;
-    }
-
-    public int getDataStructureDropDownItemsSize() {
-
-        driver.findElement(drpDataStructures).click();
-
-        List<WebElement> dataStructureDropDownItems = driver.findElements(drpDataStructureOptions);
-        List<String> itemsList = new ArrayList<>();
-
-        for (WebElement dataStructureDropDownItem : dataStructureDropDownItems) {
-            String item = dataStructureDropDownItem.getText();
-            itemsList.add(item);
-        }
-
-        return itemsList.size();
     }
 
     public void selectDataStructureItemFromDropdown(String dsType) {
         driver.findElement(drpDataStructures).click();
         List<WebElement> dataStructureOptions = driver.findElements(drpDataStructureOptions);
-
         for (WebElement dataStructureOption : dataStructureOptions) {
             String option = dataStructureOption.getText();
             if (option.equals(dsType)) {
@@ -111,16 +84,14 @@ public class HomePage {
         element.click();
     }
 
-   public void clickGetStartedButtonOfGivenDsType(String dsPage) {
-       wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-       By btnGetStarted = By.xpath("//h5[text()='" + dsPage + "']/following-sibling::a");
-       WebElement element = wait.until(ExpectedConditions.elementToBeClickable(btnGetStarted));
-       element.click();
-   }
-
+    public void clickGetStartedButtonOfGivenDsType(String dsPage) {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        By btnGetStarted = By.xpath("//h5[text()='" + dsPage + "']/following-sibling::a");
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(btnGetStarted));
+        element.click();
+    }
 
     public String getErrorMessage() {
-
         return driver.findElement(msgError).getText();
     }
 
@@ -140,28 +111,21 @@ public class HomePage {
     }
 
     public boolean isUserNameVisibleAfterSignIn(String userName) {
-
         if (userName == null || userName.isEmpty()) {
             return false;
         }
-
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         String userNameCapitalizeFirstLetter = userName.trim().substring(0, 1).toUpperCase() + userName.trim().substring(1);
         By lblSignedInUserName = By.xpath("//a[normalize-space()='" + userNameCapitalizeFirstLetter + "']");
         return wait.until(ExpectedConditions.visibilityOfElementLocated(lblSignedInUserName)).isDisplayed();
     }
 
-    public String getCurrentSignedInUserName() {
-        return driver.findElement(lblSignedInUser).getText();
-    }
-
-      public void clickSignOut() {
+    public void clickSignOut() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         wait.until(ExpectedConditions.elementToBeClickable(lnkSignOut)).click();
     }
 
     public String getLoggedOutMsg() {
-
         return driver.findElement(msgSignOut).getText();
     }
 }
