@@ -13,6 +13,8 @@
             <class name="testCases.RegisterPageTestCases"/>
             <class name="testCases.SignInPageTestCases"/>
             <class name="testCases.HomePageAfterSignInTestCases"/>
+            <class name="testCases.ArrayPageTestCases"/>
+            <class name="testCases.StackPageTestCases"/>
             <class name="testCases.QueuePageTestCases"/>
             <class name="testCases.TreePageTestCases"/>
             <class name="testCases.DataStructurePageTestCases"/>
@@ -29,6 +31,8 @@
             <class name="testCases.RegisterPageTestCases"/>
             <class name="testCases.SignInPageTestCases"/>
             <class name="testCases.HomePageAfterSignInTestCases"/>
+            <class name="testCases.ArrayPageTestCases"/>
+            <class name="testCases.StackPageTestCases"/>
             <class name="testCases.QueuePageTestCases"/>
             <class name="testCases.TreePageTestCases"/>
             <class name="testCases.DataStructurePageTestCases"/>
@@ -45,6 +49,8 @@
             <class name="testCases.RegisterPageTestCases"/>
             <class name="testCases.SignInPageTestCases"/>
             <class name="testCases.HomePageAfterSignInTestCases"/>
+            <class name="testCases.ArrayPageTestCases"/>
+            <class name="testCases.StackPageTestCases"/>
             <class name="testCases.QueuePageTestCases"/>
             <class name="testCases.TreePageTestCases"/>
             <class name="testCases.DataStructurePageTestCases"/>

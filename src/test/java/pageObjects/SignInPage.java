@@ -3,7 +3,6 @@ package pageObjects;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -49,29 +48,20 @@ public class SignInPage {
 		return driver.findElement(errorMsg).getText();
 	}
 
-	// -------------------- Page Chaining-----------------------------------------
-	// VALID LOGIN → Navigates to HomePage
 	public HomePage login(String username, String password) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-	    wait.until(ExpectedConditions.visibilityOfElementLocated(txtUsername)).sendKeys(username);
-	    wait.until(ExpectedConditions.visibilityOfElementLocated(txtPassword)).sendKeys(password);
-	    wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
-	    return new HomePage(driver);
-	    /*
-		driver.findElement(txtUsername).sendKeys(username);
-		driver.findElement(txtPassword).sendKeys(password);
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		WebElement a = driver.findElement(loginButton);
-		js.executeScript("arguments[0].click();", a);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(txtUsername)).sendKeys(username);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(txtPassword)).sendKeys(password);
+		wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
 		return new HomePage(driver);
-		*/	    
 	}
-	
+
 	public void clickSignIn() {
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-	    wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
 	}
-	public String verifyLogin(String Username, String Password,String Validation) {
+
+	public String verifyLogin(String Username, String Password, String Validation) {
 
 		String actualOutput = "";
 		enterUsername(Username);
@@ -89,10 +79,10 @@ public class SignInPage {
 			actualOutput = getBrowserValidationMessage();
 			break;
 		case "Invalid username and valid password":
-			actualOutput=getApplicationErrorMessage();
+			actualOutput = getApplicationErrorMessage();
 			break;
 		case "Valid username and invalid password":
-			actualOutput=getApplicationErrorMessage();
+			actualOutput = getApplicationErrorMessage();
 			break;
 		}
 		return actualOutput;
@@ -100,9 +90,9 @@ public class SignInPage {
 
 	public RegisterPage clickRegister() {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-	    wait.until(ExpectedConditions.visibilityOfElementLocated(registerLink));
-	    wait.until(ExpectedConditions.elementToBeClickable(registerLink)).click();
-	    return new RegisterPage(driver);			
+		wait.until(ExpectedConditions.visibilityOfElementLocated(registerLink));
+		wait.until(ExpectedConditions.elementToBeClickable(registerLink)).click();
+		return new RegisterPage(driver);
 	}
 
 	public boolean isRegistrationPageDisplayed() {
@@ -111,9 +101,7 @@ public class SignInPage {
 
 	public void navigateToPage(String loginUrl) {
 		if (loginUrl != null && !loginUrl.isEmpty()) {
-	        driver.get(loginUrl);
-	    }
-		
+			driver.get(loginUrl);
+		}
 	}
-
 }
