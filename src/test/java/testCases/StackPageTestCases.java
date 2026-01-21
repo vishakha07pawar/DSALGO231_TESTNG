@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import base.BaseTest;
 import pageObjects.DsAlgoPortalPage;
@@ -21,9 +22,9 @@ public class StackPageTestCases extends BaseTest {
 	String password = null;
 
 	@BeforeClass()
-	public void baseStack() throws IOException {
+	public void initPages() throws IOException {
 		driver.get(ConfigReader.getAppUrl());
-        dsAlgoPortal = new DsAlgoPortalPage(driver);
+		dsAlgoPortal = new DsAlgoPortalPage(driver);
 		homePage = dsAlgoPortal.clickDsPortalGetStarted();
 		signInPage = homePage.clickSignInLink();
 		username = ExcelDataReader.getValidUserName();
@@ -31,6 +32,10 @@ public class StackPageTestCases extends BaseTest {
 		signInPage.login(username, password);
 		homePage.clickGetStartedButtonOfGivenDsType("Array");
 		stackPage = new StackPage(driver);
+	}
+
+	@BeforeMethod
+	public void baseStack() {
 		stackPage.navigateToPage(ConfigReader.getAppUrl() + "stack");
 	}
 
