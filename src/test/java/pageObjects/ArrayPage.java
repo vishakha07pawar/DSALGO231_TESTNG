@@ -3,7 +3,8 @@ package pageObjects;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.testng.Assert;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -12,6 +13,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import utils.LoggerFactory;
 
 public class ArrayPage {
 	private WebDriver driver;
@@ -32,6 +35,7 @@ public class ArrayPage {
 			.xpath("//a[normalize-space(text())='Find Numbers with Even Number of Digits']");
 	private By squaresofaSortedArray = By.xpath("//a[normalize-space(text())='Squares of a Sorted Array']");
 	private By runBtn = By.xpath("//button[normalize-space()='Run']");
+	private By txtOutput = By.xpath("//pre[@id='output']");
 
 	public ArrayPage(WebDriver driver) {
 		this.driver = driver;
@@ -41,7 +45,6 @@ public class ArrayPage {
 	public boolean isArrayHeaderVisible() {
 		WebElement header = wait.until(ExpectedConditions.visibilityOfElementLocated(headerArray));
 		return header.getText().contains("Array");
-		//return driver.findElement(headerArray).isDisplayed();
 	}
 
 	public boolean isTopicsCoveredHeaderForArrayVisible() {
@@ -53,7 +56,7 @@ public class ArrayPage {
 	}
 
 	public boolean isTryHereButtonVisible() {
-		 return wait.until(ExpectedConditions.visibilityOfElementLocated(btnTryHereArrayLinkPage)).isDisplayed();
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(btnTryHereArrayLinkPage)).isDisplayed();
 	}
 
 	public boolean isArrayLinkVisible(String arrayTopicLink) {
@@ -72,51 +75,84 @@ public class ArrayPage {
 		driver.findElement(linkPath).click();
 	}
 
-	public String getArrayPageURL() {
-		return driver.getCurrentUrl();
-	}
-	
 	public void clickTryHereForTopic(String topic) {
-	    clickArrayTopicLink(topic);
-	    wait.until(ExpectedConditions.elementToBeClickable(btnTryHereArrayLinkPage)).click();
+		clickArrayTopicLink(topic);
+		wait.until(ExpectedConditions.elementToBeClickable(btnTryHereArrayLinkPage)).click();
 	}
 
-	public void clickTryHereInArrayLinkPage() {
-		driver.findElement(btnTryHereArrayLinkPage).click();
-	}
-
-	public boolean isPracticeQuestionLinkDisplayed(String expectedTopic) {
-
-		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(practiceQuestionsLinks));
-
+	public void clickAllPracticeQuestionsAndClearEditor(String inputCode, String expectedResult, String expectedMessage)
+			throws InterruptedException {
+		// Find all links
 		List<WebElement> links = driver.findElements(practiceQuestionsLinks);
 
-		for (WebElement link : links) {
-			String actualText = link.getText().trim();
-			if (actualText.equalsIgnoreCase(expectedTopic.trim())) {
-				return true;
+		for (int i = 0; i < links.size(); i++) {
+			// Re-find elements each iteration (stale element prevention)
+			List<WebElement> currentLinks = driver.findElements(practiceQuestionsLinks);
+			WebElement link = currentLinks.get(i);
+			link.click();
+			WebElement editor = wait.until(ExpectedConditions.visibilityOfElementLocated(codeEditor));
+			clearEditorText();
+			enterDataIntoEditor(inputCode);
+			clickRunButton();
+			if (expectedResult.equalsIgnoreCase("print")) {
+				Assert.assertEquals(getPrintMessage(), expectedMessage);
+			} else if (expectedResult.equalsIgnoreCase("alert")) {
+				Result result = getAlertWindowVisibilityAndAlertText();
+				Assert.assertTrue(result.isAlertWindowVisible());
+				Assert.assertEquals(result.alertWindowMessage(), expectedMessage);
+			} else if (expectedResult.isEmpty() || expectedResult.isBlank()) {
+				Assert.assertEquals(getPrintMessage(), expectedMessage);
 			}
+			// Navigate back to the practice questions page
+			driver.navigate().back();
 		}
-		return false;
 	}
-	public List<String> getAllArrayTopicLinks() {
-	    wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(lnkArrayLinks));
-	    List<WebElement> links = driver.findElements(lnkArrayLinks);
 
-	    List<String> linkTexts = new ArrayList<>();
-	    for (WebElement link : links) {
-	        linkTexts.add(link.getText().trim());
-	    }
-	    return linkTexts;
+	public record Result(boolean isAlertWindowVisible, String alertWindowMessage) {
+	}
+
+	private Result getAlertWindowVisibilityAndAlertText() {
+		try {
+			wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
+			if (wait.until(ExpectedConditions.alertIsPresent()) == null) {
+				LoggerFactory.getLogger().info("Alert windows is not visible");
+				return new Result(false, "");
+			} else {
+				Alert alert = driver.switchTo().alert();
+				String alertMessage = alert.getText();
+				alert.accept();
+				LoggerFactory.getLogger().info("Alert was present and accepted");
+				return new Result(true, alertMessage);
+			}
+		} catch (Exception ex) {
+			LoggerFactory.getLogger().error(ex.getStackTrace());
+			return new Result(false, null);
+		}
+	}
+
+	public String getPrintMessage() {
+		try {
+			return driver.findElement(txtOutput).getText();
+		} catch (Exception e) {
+			LoggerFactory.getLogger().error(e.getMessage());
+			return "";
+		}
+	}
+
+	public List<String> getAllArrayTopicLinks() {
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(lnkArrayLinks));
+		List<WebElement> links = driver.findElements(lnkArrayLinks);
+
+		List<String> linkTexts = new ArrayList<>();
+		for (WebElement link : links) {
+			linkTexts.add(link.getText().trim());
+		}
+		return linkTexts;
 	}
 
 	public void clickPracticeQuestionsTopicLink() {
 		wait.until(ExpectedConditions.elementToBeClickable(practiceQuestionsTopicLink)).click();
-	}
-
-	public void clickSearchTheArray() {
-		driver.getCurrentUrl().contains("array/practice");
-		driver.findElement(searchArrayLink).click();
 	}
 
 	public void clearEditorText() {
@@ -139,11 +175,6 @@ public class ArrayPage {
 		driver.findElement(arrayInPythonTopicLink).click();
 	}
 
-	public void clickPracticeQuestionsFromArraysInPython() {
-		clickArraysInPythonLink();
-		driver.findElement(practiceQuestionsTopicLink).click();
-	}
-
 	public void enterDataIntoEditor(String inputData) {
 		WebElement txtDsCode = driver.findElement(codeEditor);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -153,23 +184,9 @@ public class ArrayPage {
 		js.executeScript("document.querySelector('.CodeMirror').CodeMirror.setValue(arguments[0]);", inputData);
 	}
 
-	public void clickMaxConsecutiveOnes() {
-		driver.getCurrentUrl().contains("array/practice");
-		driver.findElement(maxConsecutiveOnes).click();
-	}
-
-	public void clickFindNumberswithEvenNumberofDigits() {
-		driver.getCurrentUrl().contains("array/practice");
-		driver.findElement(findNumberwithEvenNumbereofDigits).click();
-	}
-
-	public void clickSquaresofaSortedArray() {
-		driver.getCurrentUrl().contains("array/practice");
-		driver.findElement(squaresofaSortedArray).click();
-	}
-
 	public void navigateToPage(String arrayUrl) {
 		if (arrayUrl != null && !arrayUrl.isEmpty()) {
-	        driver.get(arrayUrl);	}
+			driver.get(arrayUrl);
+		}
 	}
 }
