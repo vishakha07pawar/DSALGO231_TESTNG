@@ -77,15 +77,13 @@ public class ArrayPage {
 
 	public void clickAllPracticeQuestionsAndClearEditor(String inputCode, String expectedResult, String expectedMessage)
 			throws InterruptedException {
-		// Find all links
 		List<WebElement> links = driver.findElements(practiceQuestionsLinks);
 
 		for (int i = 0; i < links.size(); i++) {
-			// Re-find elements each iteration (stale element prevention)
 			List<WebElement> currentLinks = driver.findElements(practiceQuestionsLinks);
 			WebElement link = currentLinks.get(i);
 			link.click();
-			WebElement editor = wait.until(ExpectedConditions.visibilityOfElementLocated(codeEditor));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(codeEditor));
 			clearEditorText();
 			enterDataIntoEditor(inputCode);
 			clickRunButton();
