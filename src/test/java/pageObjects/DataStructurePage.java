@@ -43,10 +43,10 @@ public class DataStructurePage {
 	}
 
 	public String getHeaderForLinks() {
-		String timeComplexityH = driver.findElement(verifyTopicLinksHeader).getText();
-		return timeComplexityH;
+		String topicH = driver.findElement(verifyTopicLinksHeader).getText();
+		return topicH;
 	}
-
+	
 	public boolean tryHereBtn() {
 		return driver.findElement(tryHereBtn).isDisplayed();
 	}
@@ -68,6 +68,9 @@ public class DataStructurePage {
 	}
 
 	public String getPracticePageURL() {
+		return driver.getCurrentUrl();
+	}
+	public String getPageURL() {
 		return driver.getCurrentUrl();
 	}
 }
