@@ -17,8 +17,9 @@ public class SignInPageTestCases extends BaseTest {
 	private SignInPage signinpage;
 	
 	@BeforeMethod()
-	public void initPages() throws IOException {
-		driver.get(ConfigReader.getAppUrl());		
+	public void baseSignIn() throws IOException {
+		driver.get(ConfigReader.getAppUrl());
+        dsAlgoPortal = new DsAlgoPortalPage(driver);
 	    homePage = dsAlgoPortal.clickDsPortalGetStarted();
 	    signinpage = homePage.clickSignInLink();
 	}

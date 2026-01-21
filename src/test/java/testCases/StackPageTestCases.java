@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import base.BaseTest;
+import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
 import pageObjects.SignInPage;
 import pageObjects.StackPage;
@@ -20,8 +21,9 @@ public class StackPageTestCases extends BaseTest {
 	String password = null;
 
 	@BeforeClass()
-	public void initPages() throws IOException {
+	public void baseStack() throws IOException {
 		driver.get(ConfigReader.getAppUrl());
+        dsAlgoPortal = new DsAlgoPortalPage(driver);
 		homePage = dsAlgoPortal.clickDsPortalGetStarted();
 		signInPage = homePage.clickSignInLink();
 		username = ExcelDataReader.getValidUserName();

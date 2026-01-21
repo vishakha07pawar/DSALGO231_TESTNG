@@ -3,6 +3,7 @@ package testCases;
 import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
 import pageObjects.QueuePage;
 import pageObjects.SignInPage;
@@ -11,16 +12,16 @@ import utils.ExcelDataReader;
 import utils.LoggerFactory;
 
 public class QueuePageTestCases extends BaseTest {
-
     private QueuePage queuePage;
-    HomePage homePage;
-    SignInPage signInPage;
-    String username = null;
-    String password = null;
+    private HomePage homePage;
+    private SignInPage signInPage;
+    private String username = null;
+    private String password = null;
 
     @BeforeMethod
     public void baseQueue() {
         driver.get(ConfigReader.getAppUrl());
+        dsAlgoPortal = new DsAlgoPortalPage(driver);
         username = ExcelDataReader.getValidUserName();
         password = ExcelDataReader.getValidPassword();
         homePage = dsAlgoPortal.clickDsPortalGetStarted();

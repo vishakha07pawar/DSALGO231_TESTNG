@@ -16,30 +16,32 @@ public class DriverManager {
 
     public static void initBrowser(String browser) {
 
-            BrowserOptions browserOptions = new BrowserOptions();
-            String browserType = browser.trim().toLowerCase();
+        LoggerFactory.getLogger().info("Initializing web driver");
 
-            switch (browserType) {
-                case "chrome":
-                    driver.set(new ChromeDriver(browserOptions.chromeOption()));
-                    break;
-                case "edge":
-                    driver.set(new EdgeDriver(browserOptions.edgeOption()));
-                    break;
-                case "firefox":
-                    driver.set(new FirefoxDriver(browserOptions.firefoxOption()));
-                    break;
-                default:
-                    LoggerFactory.getLogger().error("Unexpected value for browser: {}", browserType);
-                    throw new IllegalStateException("Unexpected value for browserType: " + browserType);
-            }
+        BrowserOptions browserOptions = new BrowserOptions();
+        String browserType = browser.trim().toLowerCase();
 
-            if (!browserType.equalsIgnoreCase("firefox"))
-                getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        switch (browserType) {
+            case "chrome":
+                driver.set(new ChromeDriver(browserOptions.chromeOption()));
+                break;
+            case "edge":
+                driver.set(new EdgeDriver(browserOptions.edgeOption()));
+                break;
+            case "firefox":
+                driver.set(new FirefoxDriver(browserOptions.firefoxOption()));
+                break;
+            default:
+                LoggerFactory.getLogger().error("Unexpected value for browser: {}", browserType);
+                throw new IllegalStateException("Unexpected value for browserType: " + browserType);
+        }
 
-            getDriver().manage().window().maximize();
-            getDriver().manage().deleteAllCookies();
-            getDriver().get(ConfigReader.getAppUrl());
+        if (!browserType.equalsIgnoreCase("firefox"))
+            getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+        getDriver().manage().window().maximize();
+        getDriver().manage().deleteAllCookies();
+        getDriver().get(ConfigReader.getAppUrl());
 
     }
 

@@ -4,6 +4,7 @@ import org.testng.Assert;
 import base.BaseTest;
 import org.testng.annotations.BeforeClass;
 import pageObjects.ArrayPage;
+import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
 import pageObjects.SignInPage;
 import utils.ConfigReader;
@@ -22,6 +23,7 @@ public class ArrayPageTestCases extends BaseTest {
     @BeforeClass()
     public void initPages() throws IOException {
         driver.get(ConfigReader.getAppUrl());
+        dsAlgoPortal = new DsAlgoPortalPage(driver);
         homePage = dsAlgoPortal.clickDsPortalGetStarted();
         signInPage = homePage.clickSignInLink();
         username = ExcelDataReader.getValidUserName();

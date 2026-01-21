@@ -3,26 +3,22 @@ package testCases;
 import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
 import utils.ConfigReader;
-import utils.ExcelDataReader;
 import utils.LoggerFactory;
 
 import java.util.List;
 
 public class HomePageTestCases extends BaseTest {
     private HomePage homePage;
-    private List<String> actualDataStructureDropDownItemNames;
-    String username = null;
-    String password = null;
+    private List<String> actualDataStructureDropDownItemNames = null;
 
     @BeforeMethod
     public void baseHomePage() {
         driver.get(ConfigReader.getAppUrl());
-        username = ExcelDataReader.getValidUserName();
-        password = ExcelDataReader.getValidPassword();
+        dsAlgoPortal = new DsAlgoPortalPage(driver);
         homePage = dsAlgoPortal.clickDsPortalGetStarted();
-        actualDataStructureDropDownItemNames = null;
     }
 
     @Test(priority = 1)
@@ -53,7 +49,7 @@ public class HomePageTestCases extends BaseTest {
     public void verifyGetStartedButtonsForPanelItemsVisible(String ExpectedPanelName) {
         List<String> actualPanelDataStructuresNames = homePage.getPanelDataStructuresItems();
         Assert.assertTrue(actualPanelDataStructuresNames.contains(ExpectedPanelName));
-        LoggerFactory.getLogger().info("Get stared button for the panel visible : {}", ExpectedPanelName);
+        LoggerFactory.getLogger().info("Get started button for the panel visible : {}", ExpectedPanelName);
     }
 
     @Test(priority = 6, dataProvider = "dropdownNamesDP", dataProviderClass = utils.TestDataProviders.class)
