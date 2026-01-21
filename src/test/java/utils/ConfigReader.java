@@ -25,29 +25,22 @@ public class ConfigReader {
         browserType = browser;
     }
 
-    public Properties loadProperties() {
+    public void loadProperties() {
         try {
             prop = new Properties();
-            String configFileResourcePath = "/config/";
-            InputStream configResourceInputStream = getClass().getResourceAsStream(configFileResourcePath + "config.properties");
+            String configFileResourcePath = "/config/" + "config.properties";
+            InputStream configResourceInputStream = getClass().getResourceAsStream(configFileResourcePath);
             prop.load(configResourceInputStream);
             setAppUrl(prop.getProperty("appURL"));
 
             if (getBrowserType() == null || getBrowserType().isEmpty()) {
                 setBrowserType(prop.getProperty("browser"));
             }
+
+            if (configResourceInputStream != null)
+                configResourceInputStream.close();
         } catch (Exception e) {
             LoggerFactory.getLogger().error("Unexcepted error occurred when loading configuration. {}", e.getMessage());
         }
-
-        return prop;
     }
-
-	public static String getLoginUrl() {
-		return prop.getProperty("login.url");
-	}
-
-	public static String getArrayUrl() {
-		return prop.getProperty("array.url");
-	}
 }

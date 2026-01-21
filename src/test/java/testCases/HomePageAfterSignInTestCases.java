@@ -4,6 +4,7 @@ import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
 import pageObjects.SignInPage;
 import utils.ConfigReader;
@@ -11,18 +12,19 @@ import utils.ExcelDataReader;
 import utils.LoggerFactory;
 
 public class HomePageAfterSignInTestCases extends BaseTest {
-    HomePage homePage;
-    SignInPage signInPage;
-    String username = null;
-    String password = null;
+    private HomePage homePage;
+    private SignInPage signInPage;
+    private String username = null;
+    private String password = null;
 
     @BeforeMethod
     public void baseHomePageAfterSignIn() {
         driver.get(ConfigReader.getAppUrl());
-        username = ExcelDataReader.getValidUserName();
-        password = ExcelDataReader.getValidPassword();
+        dsAlgoPortal = new DsAlgoPortalPage(driver);
         homePage = dsAlgoPortal.clickDsPortalGetStarted();
         signInPage = homePage.clickSignInLink();
+        username = ExcelDataReader.getValidUserName();
+        password = ExcelDataReader.getValidPassword();
         homePage = signInPage.login(username, password);
     }
 

@@ -24,7 +24,6 @@ public class TryEditorTestCases extends BaseTest {
 
     @Test(priority = 2, dataProvider = "TryEditorData", dataProviderClass = utils.TestDataProviders.class)
     public void VerifyAppropriateResultVisibleForGivenCode(String inputCode, String expectedResult, String expectedMessage) {
-
         tryEditorPage.enterDataIntoEditor(inputCode);
         tryEditorPage.Run();
         if (expectedResult.equalsIgnoreCase("print")) {

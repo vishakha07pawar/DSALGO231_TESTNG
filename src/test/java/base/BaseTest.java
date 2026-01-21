@@ -24,6 +24,7 @@ public class BaseTest {
     @BeforeClass
     @Parameters({"browserType"})
     public void before(@Optional String browser) {
+        LoggerFactory.getLogger().info("browser type from testNG configuration - {}", browser);
         ConfigReader.setBrowserType(browser);
         ConfigReader configReader = new ConfigReader();
         configReader.loadProperties();

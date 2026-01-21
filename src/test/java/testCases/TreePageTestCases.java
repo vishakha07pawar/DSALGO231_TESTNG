@@ -3,6 +3,7 @@ package testCases;
 import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
 import pageObjects.SignInPage;
 import pageObjects.TreePage;
@@ -13,14 +14,15 @@ import utils.LoggerFactory;
 public class TreePageTestCases extends BaseTest {
 
     private TreePage treePage;
-    HomePage homePage;
-    SignInPage signInPage;
-    String username = null;
-    String password = null;
+    private HomePage homePage;
+    private SignInPage signInPage;
+    private String username = null;
+    private String password = null;
 
     @BeforeMethod
     public void baseTree() {
         driver.get(ConfigReader.getAppUrl());
+        dsAlgoPortal = new DsAlgoPortalPage(driver);
         username = ExcelDataReader.getValidUserName();
         password = ExcelDataReader.getValidPassword();
         homePage = dsAlgoPortal.clickDsPortalGetStarted();
@@ -110,4 +112,3 @@ public class TreePageTestCases extends BaseTest {
     }
 
 }
-
