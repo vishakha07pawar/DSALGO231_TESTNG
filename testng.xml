@@ -10,6 +10,7 @@
             <class name="testCases.SignInPageTestCases"/>
             <class name="testCases.HomePageAfterSignInTestCases"/>
             <class name="testCases.QueuePageTestCases"/>
+            <class name="testCases.TreePageTestCases"/>
             <class name="testCases.TryEditorTestCases"></class>
         </classes>
     </test>
@@ -22,6 +23,7 @@
             <class name="testCases.SignInPageTestCases"/>
             <class name="testCases.HomePageAfterSignInTestCases"/>
             <class name="testCases.QueuePageTestCases"/>
+            <class name="testCases.TreePageTestCases"/>
             <class name="testCases.TryEditorTestCases"></class>
         </classes>
     </test>
@@ -34,6 +36,7 @@
             <class name="testCases.SignInPageTestCases"/>
             <class name="testCases.HomePageAfterSignInTestCases"/>
             <class name="testCases.QueuePageTestCases"/>
+            <class name="testCases.TreePageTestCases"/>
            <class name="testCases.TryEditorTestCases"></class>
         </classes>
     </test>
