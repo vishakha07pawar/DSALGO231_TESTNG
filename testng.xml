@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="DSAlgoTestSuite" parallel="classes" thread-count="5">
+    <listeners>
+        <listener class-name="com.aventstack.chaintest.plugins.ChainTestListener"/>
+        <listener class-name="listeners.CustomListener"/>
+    </listeners>
     <test name="EdgeTests">
         <parameter name="browserType" value="edge"/>
         <classes>
@@ -14,7 +18,7 @@
             <class name="testCases.DataStructurePageTestCases"/>
             <class name="testCases.LinkedListPageTestCases"/>
             <class name="testCases.GraphPageTestCases"/>
-            <class name="testCases.TryEditorTestCases"></class>
+            <class name="testCases.TryEditorTestCases"/>
         </classes>
     </test>
     <test name="ChromeTests">
@@ -30,7 +34,7 @@
             <class name="testCases.DataStructurePageTestCases"/>
             <class name="testCases.LinkedListPageTestCases"/>
             <class name="testCases.GraphPageTestCases"/>
-            <class name="testCases.TryEditorTestCases"></class>
+            <class name="testCases.TryEditorTestCases"/>
         </classes>
     </test>
     <test name="FirefoxTests">
@@ -46,7 +50,7 @@
             <class name="testCases.DataStructurePageTestCases"/>
             <class name="testCases.LinkedListPageTestCases"/>
             <class name="testCases.GraphPageTestCases"/>
-           <class name="testCases.TryEditorTestCases"></class>
+            <class name="testCases.TryEditorTestCases"/>
         </classes>
     </test>
 </suite>
