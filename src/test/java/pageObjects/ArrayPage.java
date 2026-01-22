@@ -182,4 +182,8 @@ public class ArrayPage {
 			driver.get(arrayUrl);
 		}
 	}
+
+	public boolean isPracticeQuestionsLinkOnArrayPageVisible() {
+		return driver.findElement(practiceQuestionsTopicLink).isDisplayed();
+	}
 }

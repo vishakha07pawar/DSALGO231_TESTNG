@@ -26,6 +26,7 @@
             <class name="testCases.TryEditorTestCases"/>
         </classes>
     </test>
+    <!-- 
     <test name="ChromeTests">
         <parameter name="browserType" value="chrome"/>
         <classes>
@@ -62,4 +63,5 @@
             <class name="testCases.TryEditorTestCases"/>
         </classes>
     </test>
+    -->
 </suite>
