@@ -5,6 +5,9 @@
         <listener class-name="com.aventstack.chaintest.plugins.ChainTestListener"/>
         <listener class-name="listeners.CustomListener"/>
     </listeners>
+    <listeners>
+    <listener class-name="listeners.ExtentReportTestNgListener"/>
+    </listeners>
     <test name="EdgeTests">
         <parameter name="browserType" value="edge"/>
         <classes>
