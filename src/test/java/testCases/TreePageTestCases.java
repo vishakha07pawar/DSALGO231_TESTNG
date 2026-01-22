@@ -5,7 +5,6 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import pageObjects.HomePage;
 import pageObjects.TreePage;
-import utils.ConfigReader;
 import utils.LoggerFactory;
 
 public class TreePageTestCases extends BaseTest {
@@ -88,7 +87,7 @@ public class TreePageTestCases extends BaseTest {
         LoggerFactory.getLogger().info("current url {}", driver.getCurrentUrl());
         Assert.assertTrue(currentURL.contains("tryEditor"));
         LoggerFactory.getLogger().info("current url {}", driver.getCurrentUrl());
-        driver.get(ConfigReader.getAppUrl() + "home");
+        driver.get(appURL + "home");
         homePage = new HomePage(driver);
         LoggerFactory.getLogger().info("Navigated to try Editor page from link {}", treePageLink);
     }

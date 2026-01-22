@@ -84,13 +84,6 @@ public class HomePage {
         element.click();
     }
 
-    public void clickGetStartedButtonOfGivenDsType(String dsPage) {
-        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-        By btnGetStarted = By.xpath("//h5[text()='" + dsPage + "']/following-sibling::a");
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(btnGetStarted));
-        element.click();
-    }
-
     public String getErrorMessage() {
         return driver.findElement(msgError).getText();
     }

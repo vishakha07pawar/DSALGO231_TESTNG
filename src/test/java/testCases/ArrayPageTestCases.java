@@ -4,12 +4,9 @@ import org.testng.Assert;
 import base.BaseTest;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 import pageObjects.ArrayPage;
 import pageObjects.HomePage;
-import utils.ConfigReader;
 import utils.LoggerFactory;
-
 import org.testng.annotations.Test;
 
 
@@ -19,7 +16,7 @@ public class ArrayPageTestCases extends BaseTest {
 	@BeforeMethod()
 	public void arrayBeforeMethod() {
 		signIntoHomePage();
-		homePage.clickGetStartedButtonOfGivenDsType("Array");
+        homePage.clickGetStartedButton("Array");
 		arrayPage = new ArrayPage(driver);
 	}
 
@@ -70,7 +67,7 @@ public class ArrayPageTestCases extends BaseTest {
 		arrayPage.clickTryHereForTopic(topic);
 		String currentURL = driver.getCurrentUrl();
 		Assert.assertTrue(currentURL.contains("tryEditor"));
-		driver.get(ConfigReader.getAppUrl() + "home");
+		driver.get(appURL + "home");
 		homePage = new HomePage(driver);
 	}
 
@@ -91,7 +88,7 @@ public class ArrayPageTestCases extends BaseTest {
 	@Test(priority = 10, dataProvider = "validInvalidPythonCode", dataProviderClass = utils.TestDataProviders.class)
 	public void VerifyAppropriateResultVisibleForGivenCode(String inputCode, String expectedResult,
 			String expectedMessage) throws InterruptedException {
-		arrayPage.navigateToPage(ConfigReader.getAppUrl() + "array/practice");
+		arrayPage.navigateToPage(appURL + "array/practice");
 		arrayPage.clickAllPracticeQuestionsAndClearEditor(inputCode, expectedResult, expectedMessage);
 	}
 }

@@ -62,45 +62,6 @@ public class TryEditorPage {
         }
     }
 
-    public boolean isAlertWindowVisible() {
-        try {
-            wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
-            if (wait.until(ExpectedConditions.alertIsPresent()) == null) {
-                LoggerFactory.getLogger().info("Alert windows is not visible");
-                return false;
-            } else {
-                Alert alert = driver.switchTo().alert();
-                alert.accept();
-                LoggerFactory.getLogger().info("Alert was present and accepted");
-                return true;
-            }
-        } catch (Exception ex) {
-            LoggerFactory.getLogger().error(ex.getStackTrace());
-            return false;
-        }
-    }
-
-    public String getAlertWindowMessage() {
-        try {
-            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-            if (wait.until(ExpectedConditions.alertIsPresent()) == null) {
-                LoggerFactory.getLogger().info("Alert windows is not present");
-                return "";
-            } else {
-                Alert alert = driver.switchTo().alert();
-                String alertText = alert.getText();
-                alert.accept();
-                LoggerFactory.getLogger().info("Alert is present and accepted");
-                return alertText;
-            }
-        } catch (Exception ex) {
-            LoggerFactory.getLogger().error(ex.getStackTrace());
-            return null;
-        }
-    }
-
     public void enterDataIntoEditor(String inputData) {
         WebElement txtDsCode = driver.findElement(txtTryEditor);
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -108,9 +69,5 @@ public class TryEditorPage {
         act.moveToElement(txtDsCode).click();
         js.executeScript("document.querySelector('.CodeMirror').CodeMirror.setValue('');");
         js.executeScript("document.querySelector('.CodeMirror').CodeMirror.setValue(arguments[0]);", inputData);
-    }
-
-    public String getTryEditorPageURL() {
-        return driver.getCurrentUrl();
     }
 }

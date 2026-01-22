@@ -62,8 +62,4 @@ public class TreePage {
     public void clickPracticeQuestionsOnTree() {
         driver.findElement(lnkPracticeQuestionsTreeTopics).click();
     }
-
-    public String getTreePageURL() {
-        return driver.getCurrentUrl();
-    }
 }
