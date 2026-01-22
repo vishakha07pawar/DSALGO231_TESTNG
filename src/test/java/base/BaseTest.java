@@ -14,8 +14,8 @@ public class BaseTest {
     protected DsAlgoPortalPage dsAlgoPortal;
     protected HomePage homePage;
     protected SignInPage signInPage;
-    protected String username = null;
-    protected String password = null;
+    protected static String username = null;
+    protected static String password = null;
 
     @BeforeSuite
     public void InitializeDataReader() {
