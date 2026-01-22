@@ -9,13 +9,12 @@ import utils.ConfigReader;
 import utils.LoggerFactory;
 
 public class DsAlgoPortalTestCases extends BaseTest {
-	
-	private DsAlgoPortalPage dsAlgoPortal;
-	private String appURL = null;
+    private DsAlgoPortalPage dsAlgoPortal;
+    private String appURL = null;
 
     @BeforeMethod
-    public void baseDsPortal() {
-    	appURL = ConfigReader.getAppUrl();
+    public void dsAlgoPortalBeforeMethod() {
+        appURL = ConfigReader.getAppUrl();
         driver.get(appURL);
         dsAlgoPortal = new DsAlgoPortalPage(driver);
     }
