@@ -1,7 +1,6 @@
 package listeners;
 
 import java.io.IOException;
-import java.util.Base64;
 
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -17,9 +16,6 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
 import factory.DriverManager;
-
-
-
 
 public class ExtentReportTestNgListener implements ITestListener {
 	public ExtentSparkReporter sparkReporter;
@@ -45,12 +41,6 @@ public class ExtentReportTestNgListener implements ITestListener {
 		extentTest.log(Status.FAIL, "Test case failed is:" + result.getName());
 		extentTest.log(Status.FAIL, "Test case failed cause is:" + result.getThrowable());
 		TakesScreenshot takesScreenshot = (TakesScreenshot) DriverManager.getDriver();
-		/*
-		 * byte[] screenshot = takesScreenshot.getScreenshotAs(OutputType.BYTES); String
-		 * base64Screenshot =Base64.getEncoder().encodeToString(screenshot);
-		 * extentTest.addScreenCaptureFromBase64String(base64Screenshot,result.getName()
-		 * );
-		 */
 		String base64 = takesScreenshot.getScreenshotAs(OutputType.BASE64);
 		try {
 			extentTest.fail(
