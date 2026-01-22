@@ -1,99 +1,88 @@
 package testCases;
 
-import java.io.IOException;
-import java.util.List;
-
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import base.BaseTest;
-import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
-import pageObjects.SignInPage;
 import pageObjects.StackPage;
 import utils.ConfigReader;
-import utils.ExcelDataReader;
+import utils.LoggerFactory;
 
 public class StackPageTestCases extends BaseTest {
-    private StackPage stackPage;
+	private StackPage stackPage;
 
-    @BeforeMethod
-    public void stackBeforeMethod() {
-        signIntoHomePage();
-        homePage.clickGetStartedButtonOfGivenDsType("Stack");
-        stackPage = new StackPage(driver);
-    }
+	@BeforeMethod
+	public void stackBeforeMethod() {
+		signIntoHomePage();
+		homePage.clickGetStartedButtonOfGivenDsType("Stack");
+		stackPage = new StackPage(driver);
+	}
 
-    @AfterMethod()
-    public void stackAfterMethod() {
-        homePage.clickSignOut();
-    }
+	@AfterMethod()
+	public void stackAfterMethod() {
+		homePage.clickSignOut();
+	}
 
-    @Test(priority = 1)
-    public void user_should_see_stack_header_for_stack_page() {
-        Assert.assertTrue(stackPage.isStackHeaderVisible());
-        //homePage.clickSignOut();
-    }
+	@Test(priority = 1)
+	public void verifyStackHeaderForStackPageIsVisible() {
+		Assert.assertTrue(stackPage.isStackHeaderVisible());
+	}
 
-    @Test(priority = 2)
-    public void user_should_see_topics_covered_header_for_stack_page() {
-        Assert.assertTrue(stackPage.isTopicsCoveredHeaderForStackVisible());
-        //homePage.clickSignOut();
-    }
+	@Test(priority = 2)
+	public void verifyTopicscoveredHeaderForStackPageIsVisible() {
+		Assert.assertTrue(stackPage.isTopicsCoveredHeaderForStackVisible());
+	}
 
-    @Test(priority = 3, dataProvider = "stackTopics", dataProviderClass = utils.TestDataProviders.class)
-    public void user_should_see_link_of_stack_sage(String topic, String header, String urlPart) {
-        Assert.assertTrue(stackPage.isStackLinkVisible(topic));
+	@Test(priority = 3, dataProvider = "stackTopics", dataProviderClass = utils.TestDataProviders.class)
+	public void verifyStackTopicsLinkOnStackPageVisible(String topic, String urlPart) {
+		Assert.assertTrue(stackPage.isStackLinkVisible(topic));
 
-    }
+	}
 
-    @Test(priority = 4, dataProvider = "stackTopics", dataProviderClass = utils.TestDataProviders.class)
-    public void user_clicks_link_on_the_stack_page(String topic, String expectedHeader, String urlPart) {
-        stackPage.clickStackTopicLink(topic);
-    }
+	@Test(priority = 4, dataProvider = "stackHeaders", dataProviderClass = utils.TestDataProviders.class)
+	public void verifyHeaderOfStackTopicsVisible(String expectedStackLinkHeader) {
+		stackPage.clickStackTopicLink(expectedStackLinkHeader);
+		String actualStackLinkHeader = stackPage.getStackLinksTopicHeader();
+		Assert.assertEquals(actualStackLinkHeader, expectedStackLinkHeader);
+	}
 
-    @Test(priority = 5, dataProvider = "stackHeaders", dataProviderClass = utils.TestDataProviders.class)
-    public void user_should_see_header_of_the_respective_stack_page(String expectedStackLinkHeader) {
-        stackPage.clickStackTopicLink(expectedStackLinkHeader);
-        String actualStackLinkHeader = stackPage.getStackLinksTopicHeader();
-        Assert.assertEquals(actualStackLinkHeader, expectedStackLinkHeader);
-    }
+	@Test(priority = 5, dataProvider = "stackTopics", dataProviderClass = utils.TestDataProviders.class)
+	public void verifyNavigationtoStackTopicsPages(String topicName, String expectedUrlPart) {
+		stackPage.clickStackTopicLink(topicName);
+		String currentURL = driver.getCurrentUrl();
+		Assert.assertTrue(currentURL.contains(expectedUrlPart));
+	}
 
-    @Test(priority = 6, dataProvider = "stackTopics", dataProviderClass = utils.TestDataProviders.class)
-    public void user_should_be_directed_to_page_of_stack_page(String topicName, String expectedHeader,
-                                                              String expectedUrlPart) {
-        stackPage.navigateToPage(ConfigReader.getAppUrl() + "stack");
-        stackPage.clickStackTopicLink(topicName);
-        String currentURL = driver.getCurrentUrl();
-        Assert.assertTrue(currentURL.contains(expectedUrlPart));
-    }
+	@Test(priority = 6, dataProvider = "stackHeaders", dataProviderClass = utils.TestDataProviders.class)
+	public void verifyTryHereButtonOnStackPageLinkVisible(String StackPageLink) {
+		stackPage.clickStackTopicLink(StackPageLink);
+		Assert.assertTrue(stackPage.isTryHereButtonOnQueueLinkPageVisible());
+		LoggerFactory.getLogger().info("Try here button on the Queue page link {} visible", StackPageLink);
+	}
 
-    @Test(priority = 7)
-    public void userClicksTryHereButtonInTheRespectiveStackPage() {
-        stackPage.navigateToPage(ConfigReader.getAppUrl() + "stack");
+	@Test(priority = 7, dataProvider = "stackHeaders", dataProviderClass = utils.TestDataProviders.class)
+	public void verifyNavigationToTryEditorPageOfStackTopics(String topic) {
+		stackPage.clickTryHereInStackLinkPage(topic);
+		String currentURL = driver.getCurrentUrl();
+		Assert.assertTrue(currentURL.contains("tryEditor"));
+		driver.get(ConfigReader.getAppUrl() + "home");
+		homePage = new HomePage(driver);
+	}
 
-        List<String> topics = stackPage.getAllStackTopicLinks();
+	@Test(priority = 8, dataProvider = "stackHeaders", dataProviderClass = utils.TestDataProviders.class)
+	public void verifyPracticeQuestionsLinkInTheStackTopicsPageVisible(String topics) {
+		stackPage.clickStackTopicLink(topics);
+		Assert.assertTrue(stackPage.isPracticeQuestionsLinkOnStackPageVisible());
+	}
 
-        for (String topic : topics) {
-            stackPage.clickTryHereInStackLinkPage(topic);
-            String currentURL = driver.getCurrentUrl();
-            Assert.assertTrue(currentURL.contains("tryEditor"));
-            // Navigate back to Array main page before next iteration
-            stackPage.navigateToPage(ConfigReader.getAppUrl() + "stack");
-        }
-    }
-
-    @Test(priority = 8)
-    public void userClicksPracticeQuestionsLinkInTheRespectiveStackPage() {
-        stackPage.clickOperationsInStackLink();
-        stackPage.clickPracticeQuestionsOnStack();
-    }
-
-    @Test(priority = 9)
-    public void userShouldBeRedirectedToPracticeQuestionsPageOfStackTopics() {
-        appURL = ConfigReader.getAppUrl();
-        driver.get(appURL + "stack/practice");
-    }
+	@Test(priority = 9, dataProvider = "stackHeaders", dataProviderClass = utils.TestDataProviders.class)
+	public void verifyPracticeQuestionsPageOfStackTopics(String topicName) {
+		stackPage.clickStackTopicLink(topicName);
+		stackPage.clickPracticeQuestionsOnStack();
+		String currentURL = driver.getCurrentUrl();
+		Assert.assertTrue(currentURL.contains("stack/practice"));
+	}
 }

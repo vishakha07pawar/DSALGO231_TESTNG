@@ -84,4 +84,12 @@ public class StackPage {
 		}
 		return linkTexts;
 	}
+
+	public boolean isPracticeQuestionsLinkOnStackPageVisible() {		
+		return driver.findElement(lnkPracticeQuestionsStackTopics).isDisplayed();
+	}
+
+	public boolean isTryHereButtonOnQueueLinkPageVisible() {
+		return driver.findElement(btnTryHereStackLinkPage).isDisplayed();
+	}
 }

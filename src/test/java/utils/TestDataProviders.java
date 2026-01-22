@@ -33,14 +33,9 @@ public class TestDataProviders {
 
     @DataProvider(name = "arrayTopics")
     public Object[][] arrayTopicsData() {
-        return new Object[][]{{"Arrays in Python", "Arrays in Python", "arrays-in-python"},
-                {"Arrays Using List", "Arrays Using List", "arrays-using-list"},
-                {"Basic Operations in Lists", "Basic Operations in Lists", "basic-operations-in-lists"}};
-    }
-
-    @DataProvider(name = "arrayTopicsurlcheck")
-    public Object[][] arrayTopics() {
-        return new Object[][]{{"arrays-in-python"}, {"arrays-using-list"}, {"basic-operations-in-lists"}};
+        return new Object[][]{{"Arrays in Python",  "arrays-in-python"},
+                {"Arrays Using List", "arrays-using-list"},
+                {"Basic Operations in Lists", "basic-operations-in-lists"}};
     }
 
     @DataProvider(name = "practiceQuestions")
@@ -56,9 +51,9 @@ public class TestDataProviders {
 
     @DataProvider(name = "stackTopics")
     public Object[][] stackTopicsData() {
-        return new Object[][]{{"Operations in Stack", "Operations in Stack", "operations-in-stack"},
-                {"Implementation", "Implementation", "implementation"},
-                {"Applications", "Applications", "stack-applications"}};
+        return new Object[][]{{"Operations in Stack","operations-in-stack"},
+                {"Implementation", "implementation"},
+                {"Applications", "stack-applications"}};
     }
 
     @DataProvider(name = "stackHeaders")
