@@ -12,7 +12,7 @@ public class TryEditorTestCases extends BaseTest {
 
     @BeforeMethod
     public void baseTryEditorPage() {
-        driver.get(ConfigReader.getAppUrl() + "tryEditor");
+        driver.get(appURL + "tryEditor");
         tryEditorPage = new TryEditorPage(driver);
     }
 

@@ -22,7 +22,8 @@ public class ConfigReader {
     }
 
     public static void setBrowserType(String browser) {
-        browserType = browser;
+        if(browser != null && !browser.isBlank())
+            browserType = browser;
     }
 
     public void loadProperties() {

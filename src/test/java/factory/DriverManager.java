@@ -14,7 +14,7 @@ public class DriverManager {
 
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-    public static void initBrowser(String browser) {
+    public static void initBrowser(String browser, String appURL) {
 
         LoggerFactory.getLogger().info("Initializing web driver");
 
@@ -41,7 +41,7 @@ public class DriverManager {
 
         getDriver().manage().window().maximize();
         getDriver().manage().deleteAllCookies();
-        getDriver().get(ConfigReader.getAppUrl());
+        getDriver().get(appURL);
 
     }
 

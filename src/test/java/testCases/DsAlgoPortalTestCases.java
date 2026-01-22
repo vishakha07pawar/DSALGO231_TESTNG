@@ -5,16 +5,13 @@ import pageObjects.DsAlgoPortalPage;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
-import utils.ConfigReader;
 import utils.LoggerFactory;
 
 public class DsAlgoPortalTestCases extends BaseTest {
     private DsAlgoPortalPage dsAlgoPortal;
-    private String appURL = null;
 
     @BeforeMethod
     public void dsAlgoPortalBeforeMethod() {
-        appURL = ConfigReader.getAppUrl();
         driver.get(appURL);
         dsAlgoPortal = new DsAlgoPortalPage(driver);
     }

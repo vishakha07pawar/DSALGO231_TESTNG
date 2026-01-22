@@ -10,7 +10,7 @@ import static utils.LoggerFactory.*;
 
 public class BaseTest {
     protected WebDriver driver;
-    protected String appURL = null;
+    protected static String appURL = null;
     protected DsAlgoPortalPage dsAlgoPortal;
     protected HomePage homePage;
     protected SignInPage signInPage;
@@ -18,12 +18,15 @@ public class BaseTest {
     protected static String password = null;
 
     @BeforeSuite
-    public void InitializeDataReader() {
+    public void Initialize() {
         LoggerFactory.getLogger().info("calling DataReader to read text data from excel data source");
         ExcelDataReader.ReadTestData("/testData/" + "TestData.xlsx");
         ExcelDataReader.getValidCredentials();
         username = ExcelDataReader.getValidUserName();
         password = ExcelDataReader.getValidPassword();
+        ConfigReader configReader = new ConfigReader();
+        configReader.loadProperties();
+        appURL = ConfigReader.getAppUrl();
     }
 
     @BeforeClass
@@ -31,9 +34,7 @@ public class BaseTest {
     public void before(@Optional String browser) {
         LoggerFactory.getLogger().info("browser type from testNG configuration - {}", browser);
         ConfigReader.setBrowserType(browser);
-        ConfigReader configReader = new ConfigReader();
-        configReader.loadProperties();
-        DriverManager.initBrowser(ConfigReader.getBrowserType());
+        DriverManager.initBrowser(ConfigReader.getBrowserType(),appURL);
         driver = DriverManager.getDriver();
     }
 
@@ -44,7 +45,7 @@ public class BaseTest {
     }
 
     public void signIntoHomePage() {
-        driver.get(ConfigReader.getAppUrl());
+        driver.get(appURL);
         dsAlgoPortal = new DsAlgoPortalPage(driver);
         homePage = dsAlgoPortal.clickDsPortalGetStarted();
         signInPage = homePage.clickSignInLink();

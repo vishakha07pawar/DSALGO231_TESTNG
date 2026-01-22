@@ -8,7 +8,6 @@ import org.testng.annotations.Test;
 import base.BaseTest;
 import pageObjects.HomePage;
 import pageObjects.LinkedListPage;
-import utils.ConfigReader;
 import utils.LoggerFactory;
 import utils.TestDataProviders;
 
@@ -92,7 +91,7 @@ public class LinkedListPageTestCases extends BaseTest {
         linkedListPage.clickTopicLink(expectedLink);
         linkedListPage.tryHereBtnForLinks();
         Assert.assertTrue(driver.getCurrentUrl().contains("tryEditor"));
-        driver.get(ConfigReader.getAppUrl() + "home");
+        driver.get(appURL + "home");
         homePage = new HomePage(driver);
         LoggerFactory.getLogger().info("User clicks the Try Here button For the respective page");
     }

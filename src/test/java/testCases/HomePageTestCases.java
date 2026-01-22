@@ -5,7 +5,6 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import pageObjects.DsAlgoPortalPage;
 import pageObjects.HomePage;
-import utils.ConfigReader;
 import utils.LoggerFactory;
 
 import java.util.List;
@@ -16,7 +15,7 @@ public class HomePageTestCases extends BaseTest {
 
     @BeforeMethod
     public void baseHomePage() {
-        driver.get(ConfigReader.getAppUrl());
+        driver.get(appURL);
         dsAlgoPortal = new DsAlgoPortalPage(driver);
         homePage = dsAlgoPortal.clickDsPortalGetStarted();
     }

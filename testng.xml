@@ -3,10 +3,8 @@
 <suite name="DSAlgoTestSuite" parallel="classes" thread-count="5">
     <listeners>
         <listener class-name="com.aventstack.chaintest.plugins.ChainTestListener"/>
+        <listener class-name="listeners.ExtentReportTestNgListener"/>
         <listener class-name="listeners.CustomListener"/>
-    </listeners>
-    <listeners>
-    <listener class-name="listeners.ExtentReportTestNgListener"/>
     </listeners>
     <test name="EdgeTests">
         <parameter name="browserType" value="edge"/>
@@ -26,7 +24,6 @@
             <class name="testCases.TryEditorTestCases"/>
         </classes>
     </test>
-    <!-- 
     <test name="ChromeTests">
         <parameter name="browserType" value="chrome"/>
         <classes>
@@ -63,5 +60,4 @@
             <class name="testCases.TryEditorTestCases"/>
         </classes>
     </test>
-    -->
 </suite>

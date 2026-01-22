@@ -91,10 +91,10 @@
         </dependency>
         <!-- Source: https://mvnrepository.com/artifact/com.aventstack/extentreports-testng-adapter -->
         <dependency>
-           <groupId>com.aventstack</groupId>
-           <artifactId>extentreports-testng-adapter</artifactId>
-           <version>1.0.7</version>
-       </dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports-testng-adapter</artifactId>
+            <version>1.0.7</version>
+        </dependency>
 
     </dependencies>
 </project>

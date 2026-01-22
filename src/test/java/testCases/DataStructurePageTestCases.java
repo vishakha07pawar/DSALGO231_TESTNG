@@ -8,7 +8,6 @@ import org.testng.annotations.Test;
 import base.BaseTest;
 import pageObjects.DataStructurePage;
 import pageObjects.HomePage;
-import utils.ConfigReader;
 import utils.LoggerFactory;
 import utils.TestDataProviders;
 
@@ -94,7 +93,7 @@ public class DataStructurePageTestCases extends BaseTest {
         dataStructurePage.clickTopicLink(expectedLink);
         dataStructurePage.tryHereBtnForLinks();
         Assert.assertTrue(dataStructurePage.getPageURL().contains("tryEditor"));
-        driver.get(ConfigReader.getAppUrl() + "home");
+        driver.get(appURL + "home");
         homePage = new HomePage(driver);
         LoggerFactory.getLogger().info("User clicks the Try Here button For the respective page");
     }
