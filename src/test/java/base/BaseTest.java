@@ -1,12 +1,18 @@
 package base;
 
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 import factory.DriverManager;
+import io.qameta.allure.Allure;
 import pageObjects.*;
 import utils.*;
 
 import static utils.LoggerFactory.*;
+
+import java.io.ByteArrayInputStream;
 
 public class BaseTest {
     protected WebDriver driver;
@@ -39,7 +45,8 @@ public class BaseTest {
     }
 
     @AfterClass
-    public void tearDown() {
+    public void tearDown(ITestResult result) {
+    	takeScreenShot(result);
         DriverManager.quitDriver();
         getLogger().info("DONE tearDown()..");
     }
@@ -51,6 +58,13 @@ public class BaseTest {
         signInPage = homePage.clickSignInLink();
         homePage = signInPage.login(username, password);
     }
+    public void takeScreenShot(ITestResult result) {
+		if (!result.isSuccess()) {
+			TakesScreenshot takesScreenshot = (TakesScreenshot) DriverManager.getDriver();
+			byte[] screenShot = takesScreenshot.getScreenshotAs(OutputType.BYTES);
+			Allure.addAttachment(result.getName(), new ByteArrayInputStream(screenShot));
+		}
+	}
 }
 
 
