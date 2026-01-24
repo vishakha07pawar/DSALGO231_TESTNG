@@ -1,18 +1,21 @@
 package base;
 
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import static utils.LoggerFactory.getLogger;
+
 import org.openqa.selenium.WebDriver;
-import org.testng.ITestResult;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
+
 import factory.DriverManager;
-import io.qameta.allure.Allure;
-import pageObjects.*;
-import utils.*;
-
-import static utils.LoggerFactory.*;
-
-import java.io.ByteArrayInputStream;
+import pageObjects.DsAlgoPortalPage;
+import pageObjects.HomePage;
+import pageObjects.SignInPage;
+import utils.ConfigReader;
+import utils.ExcelDataReader;
+import utils.LoggerFactory;
 
 public class BaseTest {
     protected WebDriver driver;
@@ -45,9 +48,8 @@ public class BaseTest {
     }
 
     @AfterClass
-    public void tearDown(ITestResult result) {
-    	takeScreenShot(result);
-        DriverManager.quitDriver();
+    public void tearDown() {
+    	DriverManager.quitDriver();
         getLogger().info("DONE tearDown()..");
     }
 
@@ -58,13 +60,7 @@ public class BaseTest {
         signInPage = homePage.clickSignInLink();
         homePage = signInPage.login(username, password);
     }
-    public void takeScreenShot(ITestResult result) {
-		if (!result.isSuccess()) {
-			TakesScreenshot takesScreenshot = (TakesScreenshot) DriverManager.getDriver();
-			byte[] screenShot = takesScreenshot.getScreenshotAs(OutputType.BYTES);
-			Allure.addAttachment(result.getName(), new ByteArrayInputStream(screenShot));
-		}
-	}
+    
 }
 
 
