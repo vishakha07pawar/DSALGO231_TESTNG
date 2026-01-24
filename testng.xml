@@ -6,7 +6,7 @@
 			class-name="com.aventstack.chaintest.plugins.ChainTestListener" />
 		<listener class-name="listeners.ExtentReportTestNgListener" />
 		<listener class-name="listeners.CustomListener" />
-		<listener class-name="analyzer.MyTransformerAnalyzer" />
+		<listener class-name="analyzer.Transformer" />
 	</listeners>
 	<test name="FirefoxTests">
 		<parameter name="browserType" value="firefox" />
