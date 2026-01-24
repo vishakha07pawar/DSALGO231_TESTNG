@@ -23,6 +23,7 @@ public class HomePage {
 	private By lnkSignOut = By.xpath("//a[normalize-space()='Sign out']");
 	private By msgSignOut = By.xpath("//div[@class='alert alert-primary' and @role='alert']");
 	private WebDriverWait wait;
+	private JavascriptExecutor js;
 
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
@@ -78,11 +79,12 @@ public class HomePage {
 		}
 	}
 
-	public void clickGetStartedButton(String dsType) {
-		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+	public void clickGetStartedButton(String dsType) {		
 		By btnGetStarted = By.xpath("//h5[text()='" + dsType + "']/following-sibling::a");
-		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(btnGetStarted));
-		element.click();
+		WebElement element = driver.findElement(btnGetStarted);
+		js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView(true);", element);
+		element.click();		
 	}
 
 	public String getErrorMessage() {
