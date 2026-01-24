@@ -2,10 +2,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="DSAlgoTestSuite" parallel="classes" thread-count="5">
 	<listeners>
-		<listener
-			class-name="com.aventstack.chaintest.plugins.ChainTestListener" />
-		<listener class-name="listeners.ExtentReportTestNgListener" />
-		<listener class-name="listeners.CustomListener" />
+		<listener class-name="com.aventstack.chaintest.plugins.ChainTestListener" />
+		<listener class-name="listeners.TestNgListener" />
 		<listener class-name="analyzer.Transformer" />
 	</listeners>
 	<test name="FirefoxTests">

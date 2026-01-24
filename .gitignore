@@ -9,3 +9,5 @@ test-output/
 /*.html
 /.metadata
 /bin
+/allure-results
+/allure-report
