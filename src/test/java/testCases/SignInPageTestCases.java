@@ -30,7 +30,8 @@ public class SignInPageTestCases extends BaseTest {
 	}
 
 	@Test(priority = 2, dataProvider = "invalidLoginDataProvider", dataProviderClass = utils.TestDataProviders.class)
-	public void shouldValidateInvalidLoginData(String userName, String password, String expectedMessage,String validation)  {
+	public void shouldValidateInvalidLoginData(String userName, String password, String expectedMessage,
+			String validation) {
 		String actMsg = signinpage.verifyLogin(userName, password, validation);
 		Assert.assertEquals(actMsg, expectedMessage);
 	}

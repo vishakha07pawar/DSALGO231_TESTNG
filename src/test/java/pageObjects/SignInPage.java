@@ -35,10 +35,6 @@ public class SignInPage {
 		}
 	}
 
-	public String getSignInPageURL() {
-		return driver.getCurrentUrl();
-	}
-
 	public String getBrowserValidationMessage() {
 		WebElement activeElement = driver.switchTo().activeElement();
 		return activeElement.getAttribute("validationMessage");
@@ -97,11 +93,5 @@ public class SignInPage {
 
 	public boolean isRegistrationPageDisplayed() {
 		return driver.getCurrentUrl().contains("register");
-	}
-
-	public void navigateToPage(String loginUrl) {
-		if (loginUrl != null && !loginUrl.isEmpty()) {
-			driver.get(loginUrl);
-		}
 	}
 }
