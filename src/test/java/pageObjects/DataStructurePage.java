@@ -46,17 +46,13 @@ public class DataStructurePage {
 		String topicH = driver.findElement(verifyTopicLinksHeader).getText();
 		return topicH;
 	}
-	
+
 	public boolean tryHereBtn() {
 		return driver.findElement(tryHereBtn).isDisplayed();
 	}
 
 	public void tryHereBtnForLinks() {
 		driver.findElement(tryHereBtn).click();
-	}
-
-	public String getDataStructurePageURL() {
-		return driver.getCurrentUrl();
 	}
 
 	public boolean isPracticeQuestionsLinkOnDsTopicsVisible() {
@@ -70,6 +66,7 @@ public class DataStructurePage {
 	public String getPracticePageURL() {
 		return driver.getCurrentUrl();
 	}
+
 	public String getPageURL() {
 		return driver.getCurrentUrl();
 	}
