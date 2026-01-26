@@ -1,7 +1,6 @@
 package pageObjects;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -21,7 +20,6 @@ public class StackPage {
 	private By lnkStackLinks = By.xpath("//a[@class='list-group-item']");
 	private By btnTryHereStackLinkPage = By.xpath("//a[normalize-space()='Try here>>>']");
 	private By lnkPracticeQuestionsStackTopics = By.xpath("//a[normalize-space()='Practice Questions']");
-	private By lnkOperationsInStack = By.xpath("//a[normalize-space()='Operations in Stack']");
 
 	public StackPage(WebDriver driver) {
 		this.driver = driver;
@@ -46,10 +44,6 @@ public class StackPage {
 		return false;
 	}
 
-	public void clickOperationsInStackLink() {
-		wait.until(ExpectedConditions.elementToBeClickable(lnkOperationsInStack)).click();
-	}
-
 	public void clickStackTopicLink(String stackTopicLink) {
 		By linkPath = By.xpath("//a[text() = '" + stackTopicLink + "']");
 		driver.findElement(linkPath).click();
@@ -66,23 +60,6 @@ public class StackPage {
 
 	public void clickPracticeQuestionsOnStack() {
 		driver.findElement(lnkPracticeQuestionsStackTopics).click();
-	}
-
-	public void navigateToPage(String stackUrl) {
-		if (stackUrl != null && !stackUrl.isEmpty()) {
-			driver.get(stackUrl);
-		}
-	}
-
-	public List<String> getAllStackTopicLinks() {
-		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(lnkStackLinks));
-		List<WebElement> links = driver.findElements(lnkStackLinks);
-
-		List<String> linkTexts = new ArrayList<>();
-		for (WebElement link : links) {
-			linkTexts.add(link.getText().trim());
-		}
-		return linkTexts;
 	}
 
 	public boolean isPracticeQuestionsLinkOnStackPageVisible() {		

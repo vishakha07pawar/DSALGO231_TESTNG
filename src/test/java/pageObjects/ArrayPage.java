@@ -25,7 +25,6 @@ public class ArrayPage {
 	private By headerArrayLinkTopic = By.xpath("//div[@class='col-sm']//strong//p");
 	private By lnkArrayLinks = By.xpath("//a[@class='list-group-item']");
 	private By btnTryHereArrayLinkPage = By.xpath("//a[normalize-space()='Try here>>>']");
-	private By arrayInPythonTopicLink = By.xpath("//a[normalize-space()='Arrays in Python']");
 	private By practiceQuestionsTopicLink = By.xpath("//a[normalize-space()='Practice Questions']");
 	private By practiceQuestionsLinks = By.xpath("//a[@class='list-group-item']");
 	private By codeEditor = By.xpath("//div[@class='CodeMirror-scroll']");
@@ -133,17 +132,6 @@ public class ArrayPage {
 		}
 	}
 
-	public List<String> getAllArrayTopicLinks() {
-		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(lnkArrayLinks));
-		List<WebElement> links = driver.findElements(lnkArrayLinks);
-
-		List<String> linkTexts = new ArrayList<>();
-		for (WebElement link : links) {
-			linkTexts.add(link.getText().trim());
-		}
-		return linkTexts;
-	}
-
 	public void clickPracticeQuestionsTopicLink() {
 		wait.until(ExpectedConditions.elementToBeClickable(practiceQuestionsTopicLink)).click();
 	}
@@ -158,14 +146,6 @@ public class ArrayPage {
 
 	public void clickRunButton() {
 		driver.findElement(runBtn).click();
-	}
-
-	public void clickArrayInPythonLink() {
-		wait.until(ExpectedConditions.elementToBeClickable(arrayInPythonTopicLink)).click();
-	}
-
-	public void clickArraysInPythonLink() {
-		driver.findElement(arrayInPythonTopicLink).click();
 	}
 
 	public void enterDataIntoEditor(String inputData) {
