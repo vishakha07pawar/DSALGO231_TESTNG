@@ -1,7 +1,6 @@
 package pageObjects;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import org.testng.Assert;
 import org.openqa.selenium.Alert;
