@@ -62,11 +62,11 @@ public class StackPage {
 		driver.findElement(lnkPracticeQuestionsStackTopics).click();
 	}
 
-	public boolean isPracticeQuestionsLinkOnStackPageVisible() {		
+	public boolean isPracticeQuestionsLinkOnStackPageVisible() {
 		return driver.findElement(lnkPracticeQuestionsStackTopics).isDisplayed();
 	}
 
-	public boolean isTryHereButtonOnQueueLinkPageVisible() {
+	public boolean isTryHereButtonOnStackLinkPageVisible() {
 		return driver.findElement(btnTryHereStackLinkPage).isDisplayed();
 	}
 }

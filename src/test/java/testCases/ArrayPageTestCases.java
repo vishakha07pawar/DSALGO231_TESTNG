@@ -6,9 +6,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import pageObjects.ArrayPage;
 import pageObjects.HomePage;
-import utils.LoggerFactory;
 import org.testng.annotations.Test;
-
 
 public class ArrayPageTestCases extends BaseTest {
 	private ArrayPage arrayPage;
@@ -16,7 +14,7 @@ public class ArrayPageTestCases extends BaseTest {
 	@BeforeMethod()
 	public void arrayBeforeMethod() {
 		signIntoHomePage();
-        homePage.clickGetStartedButton("Array");
+		homePage.clickGetStartedButton("Array");
 		arrayPage = new ArrayPage(driver);
 	}
 
@@ -59,7 +57,6 @@ public class ArrayPageTestCases extends BaseTest {
 	public void verifyTryHereButtonOnStackPageLinkVisible(String ArrayPageLink) {
 		arrayPage.clickArrayTopicLink(ArrayPageLink);
 		Assert.assertTrue(arrayPage.isTryHereButtonVisible());
-		LoggerFactory.getLogger().info("Try here button on the Queue page link {} visible", ArrayPageLink);
 	}
 
 	@Test(priority = 7, dataProvider = "arrayHeaders", dataProviderClass = utils.TestDataProviders.class)
